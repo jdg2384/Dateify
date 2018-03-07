@@ -8,7 +8,9 @@
  */
 
 #import "AppDelegate.h"
-
+#import <SpotifyMetadata/SpotifyMetadata.h>
+#import <SpotifyAudioPlayback/SpotifyAudioPlayback.h>
+  
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 

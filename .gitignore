@@ -1,2 +1,4 @@
 .DS_Store
 dating/node_modules
+node_modules
+dating/ios/build
