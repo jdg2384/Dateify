@@ -10,7 +10,7 @@
     "react": "^16.3.0-alpha.1",
     "react-native": "^0.54.0",
     "react-native-router-flux": "^4.0.0-beta.28",
-    "react-native-spotify": "^2.0.3",
+    "react-native-spotify": "git+https://github.com/lufinkey/react-native-spotify.git",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
