@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { Image, Text } from 'react-native';
+import { Image, Text, ScrollView, View } from 'react-native';
 import Spotify from 'react-native-spotify';
 import { Card, CardSection, Button } from './common';
+import TrackList from './TrackList';
 
 class Main extends Component {
   state = {
     name: '',
     token: '',
-    imageURL: ''
+    imageURL: '',
+    topTracks: []
   }
 
   async componentDidMount() {
     Spotify.getMe((res, error) => {
       if (res) {
-        console.log(res.images[0].url);
         this.setState({ name: res.display_name, imageURL: res.images[0].url });
       }
       if (error) {
@@ -22,7 +23,6 @@ class Main extends Component {
       }
     });
     this.checkAuth();
-    console.log(this.state.token);
   }
 
   // not working atm
@@ -32,15 +32,16 @@ class Main extends Component {
     });
   }
 
+  // just for testing
   async getAlbum(id) {
     Spotify.getAlbum(id, {}, (res, err) => {
       console.log(res, err);
     });
   }
 
-  // get users top 10 tracks
+  // get users top 20 tracks
   async getTracks() {
-    const response = await fetch('https://api.spotify.com/v1/me/top/tracks?limit=10', {
+    const response = await fetch('https://api.spotify.com/v1/me/top/tracks?limit=20', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ class Main extends Component {
       })
     });
     const json = await response.json();
-    console.log(json);
+    this.setState({ topTracks: json.items });
   }
 
   async checkAuth() {
@@ -59,33 +60,38 @@ class Main extends Component {
 
   render() {
     return (
-      <Card>
-        <CardSection>
-          <Text>
-            Welcome {this.state.name}!
-          </Text>
-        </CardSection>
+      <View style={{ flex: 1 }}>
+        <Card style={{ flex: 1 }}>
+          <CardSection>
+            <Text>
+              Welcome {this.state.name}!
+            </Text>
+          </CardSection>
 
-        <Image
-          style={{ width: 300, height: 300 }}
-          source={{ uri: this.state.imageURL }}
-        />
+          <CardSection
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Image
+              style={{ width: 200, height: 200 }}
+              source={{ uri: this.state.imageURL }}
+            />
+          </CardSection>
 
-        <CardSection>
-          {/* <Button onPress={() => this.getAlbum('5f6Eu9QtujgGggq5qbbycV')}> */}
-          <Button onPress={() => this.checkAuth()}>
-            Press
-          </Button>
-        </CardSection>
-
-        <CardSection>
-          <Button onPress={() => this.getTracks()}>
-            Get Top Tracks
-          </Button>
-        </CardSection>
+          <CardSection>
+            <Button onPress={() => this.getTracks()}>
+              Get Top Tracks
+            </Button>
+          </CardSection>
 
 
-      </Card>
+          <TrackList tracks={this.state.topTracks} />
+
+
+        </Card>
+      </View>
     );
   }
 }
