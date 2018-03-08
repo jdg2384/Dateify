@@ -39,9 +39,9 @@ class Main extends Component {
     });
   }
 
-  // get users top 20 tracks
+  // get users top 15 tracks
   async getTracks() {
-    const response = await fetch('https://api.spotify.com/v1/me/top/tracks?limit=20', {
+    const response = await fetch('https://api.spotify.com/v1/me/top/tracks?limit=15', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ class Main extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Card style={{ flex: 1 }}>
+        <Card>
           <CardSection>
             <Text>
               Welcome {this.state.name}!
