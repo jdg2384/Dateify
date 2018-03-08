@@ -25,9 +25,7 @@ class Login extends Component {
 		if (!this.state.spotifyInitialized) {
 			//initialize spotify
 			Spotify.initialize(spotifyOptions, (loggedIn, error) => {
-				if (error != null) {
-					console.log(error.message);
-				}
+				if (error) console.log(error.message);
 				//update UI state
 				this.setState({ spotifyInitialized: true });
 				//handle initialization
@@ -36,25 +34,19 @@ class Login extends Component {
           Actions.main();
 				}
 			});
-		} //else {
-			//update UI state
-			// this.setState({ spotifyInitialized: true });
-			//handle logged in
-		// 	if (Spotify.isLoggedIn()) {
-		// 		console.log('logged in!!');
-		// 	}
-		// }
+		}
 	}
 
-    login() {
-      Spotify.login((loggedIn, error) => {
-        if (error) console.log(error);
-        if (loggedIn) {
-          console.log('success');
-          Actions.main();
-        }
-      });
-    }
+  // start oauth process
+  login() {
+    Spotify.login((loggedIn, error) => {
+      if (error) console.log(error);
+      if (loggedIn) {
+        console.log('great success');
+        Actions.main();
+      }
+    });
+  }
 
   render() {
     return (
