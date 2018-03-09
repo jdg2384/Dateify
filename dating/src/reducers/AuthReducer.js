@@ -3,10 +3,10 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  user: null,
   error: '',
   loading: false,
-  token: ''
+  accessToken: '',
+  expiresIn: '',
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -15,7 +15,15 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
 
     case LOGIN_USER_SUCCESS:
-      return { ...state, ...INITIAL_STATE, user: action.payload };
+      console.log(action.payload);
+      return {
+        ...state,
+        ...INITIAL_STATE,
+        accessToken: action.payload.accessToken,
+        expiresIn: action.payload.expiresIn
+      };
+
+    // case LOGIN_USER_FAIL ?
 
     default:
       return state;
