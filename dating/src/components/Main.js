@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Image, Text, ScrollView } from 'react-native';
 import Spotify from 'react-native-spotify';
-import { Card, CardSection, Input } from './common';
+import { Card, CardSection } from './common';
 
 class Main extends Component {
+  // need to "redux-ify" all of this
   state = {
     name: '',
     token: '',
@@ -44,6 +45,8 @@ class Main extends Component {
   // sets users Auth token in state
   async checkAuth() {
     Spotify.getAuthAsync((res) => {
+      console.log(res); // check token expire time - if it is less than __some amount__ from
+      // current time --> use refresh token to request new one (following OAuth Encryption standards)
       this.setState({ token: res.accessToken });
     });
   }
