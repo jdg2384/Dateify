@@ -6,7 +6,7 @@ const Track = (track) => {
   return (
     <CardSection style={{ flex: 1 }}>
       <Text>
-        {track.track.name}
+        {track.track.name} - {track.track.artists[0].name}
       </Text>
     </CardSection>
   );
