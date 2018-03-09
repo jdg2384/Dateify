@@ -17,7 +17,8 @@ const spotifyOptions = {
 
 class Login extends Component {
   state = {
-    spotifyInitialized: false
+    spotifyInitialized: false,
+    loggedIn: false // better to have redux-level state management here and just check for token??
   };
 
   async componentDidMount() {
