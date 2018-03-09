@@ -3,11 +3,10 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
   user: null,
   error: '',
-  loading: false
+  loading: false,
+  token: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
