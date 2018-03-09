@@ -43,6 +43,8 @@ class Login extends Component {
     Spotify.login((loggedIn, error) => {
       if (error) console.log(error);
       if (loggedIn) {
+        // ** Check if user has required info already -  if not, take them to form page
+        // ** If they do have required info - go to main page
         console.log('great success');
         Actions.main();
       }

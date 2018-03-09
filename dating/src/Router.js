@@ -2,8 +2,8 @@ import React from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import Login from './components/Login';
 import Main from './components/Main';
-import TrackList from './components/TrackList';
 import ChatList from './components/ChatList';
+import UserInfoForm from './components/UserInfoForm';
 
 // eslint-disable-next-line
 const RouterComponent = () => {
@@ -18,13 +18,17 @@ const RouterComponent = () => {
           component={Main}
           title="User"
           initial
+          leftTitle="About Me"
+          onLeft={() => {
+            Actions.userInfoForm();
+          }}
           rightTitle="Chat List"
           onRight={() => {
             Actions.chat();
           }}
           />
+          <Scene key="userInfoForm" component={UserInfoForm} title="About Me" />
           <Scene key="chat" component={ChatList} title="Chat List" />
-          <Scene key="trackList" component={TrackList} title="TrackList" />
         </Scene>
       </Scene>
     </Router>

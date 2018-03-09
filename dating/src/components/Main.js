@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Text, ScrollView } from 'react-native';
 import Spotify from 'react-native-spotify';
-import { Card, CardSection, Button } from './common';
-import TrackList from './TrackList';
-import ArtistList from './ArtistList';
+import { Card, CardSection, Input } from './common';
 
 class Main extends Component {
   state = {
@@ -28,25 +26,6 @@ class Main extends Component {
     this.checkAuth();
   }
 
-  async checkAuth() {
-    Spotify.getAuthAsync((res) => {
-      this.setState({ token: res.accessToken });
-    });
-  }
-
-  // not working atm
-  async getTopArtists() {
-    Spotify.sendRequest('v1/me/player/top/artists', 'GET', {}, false, (res, error) => {
-      if (error) console.log(typeof error, error);
-    });
-  }
-
-  // just for testing
-  async getAlbum(id) {
-    Spotify.getAlbum(id, {}, (res, err) => {
-      console.log(res, err);
-    });
-  }
 
   // get users top 50 tracks
   async getTop(type) {
@@ -62,11 +41,19 @@ class Main extends Component {
     if (type === 'artists') this.setState({ topArtists: json.items, topTracks: [] });
   }
 
+  // sets users Auth token in state
+  async checkAuth() {
+    Spotify.getAuthAsync((res) => {
+      this.setState({ token: res.accessToken });
+    });
+  }
+
+
   render() {
     return (
       <ScrollView style={{ flex: 1 }}>
         <Card>
-          <CardSection>
+          <CardSection style={{ justifyContent: 'center' }}>
             <Text>
               Welcome {this.state.name}!
             </Text>
@@ -83,22 +70,6 @@ class Main extends Component {
               source={{ uri: this.state.imageURL }}
             />
           </CardSection>
-
-          <CardSection>
-            <Button onPress={() => this.getTop('tracks')}>
-              Get Top Tracks
-            </Button>
-          </CardSection>
-
-          <CardSection>
-            <Button onPress={() => this.getTop('artists')}>
-              Get Top Artists
-            </Button>
-          </CardSection>
-
-          <TrackList tracks={this.state.topTracks} />
-
-          <ArtistList artists={this.state.topArtists} />
 
         </Card>
       </ScrollView>
