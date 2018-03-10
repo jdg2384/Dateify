@@ -1,2 +1,3 @@
 export * from './AuthActions';
-export * from './UserInfoActions';
+export * from './UserFormActions';
+export * from './UserActions';
