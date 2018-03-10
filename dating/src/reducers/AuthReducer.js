@@ -4,7 +4,7 @@ import {
 
 const INITIAL_STATE = {
   error: '',
-  loading: false,
+  loading: false, // do i need this?
   accessToken: '',
   expiresIn: '',
 };

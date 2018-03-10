@@ -36,7 +36,8 @@ class Login extends Component {
 				//handle initialization
 				if (loggedIn) {
 					console.log('logged in!');
-          this.props.loginUserSuccess();
+          // this.props.loginUserSuccess();
+          // have to call login first before calling loginUserSuccess 
           Actions.main();
 				}
 			});
