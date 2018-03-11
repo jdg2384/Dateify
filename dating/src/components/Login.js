@@ -37,7 +37,7 @@ class Login extends Component {
 				if (loggedIn) {
 					console.log('logged in!');
           // this.props.loginUserSuccess();
-          // have to call login first before calling loginUserSuccess 
+          // have to call login first before calling loginUserSuccess
           Actions.main();
 				}
 			});
@@ -76,4 +76,4 @@ const mapStateToProps = state => {
   return { accessToken, expiresIn };
 };
 
-export default connect(mapStateToProps, { loginUserSuccess })(Login);
+export default Login;
