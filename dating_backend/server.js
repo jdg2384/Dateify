@@ -132,12 +132,24 @@ app.get('/likes/:id',(req,res,next) => {
 
 // Post All Match **WORKING**
 app.post('/likes', function(req, res, next){
+    const { user_id_one, user_id_two } = req.body
     knex('likes').insert({
-        user_id_one: req.body.user_id_one,
-        user_id_two: req.body.user_id_two,
+        user_id_one: user_id_one,
+        user_id_two: user_id_two,
     },'*') 
-    .then(user=>{
-        res.status(204).send({id:user[0].id})
+    .then(()=>{
+        return knex('likes').where({'user_id_two': user_id_one, 'user_id_one': user_id_two})
+    })
+    .then(match=>{
+        console.log(match)
+        const object = {
+            match: false
+        }
+        if(match[0]){
+            object.match = true
+            object.matchInfo = match[0]
+        }
+        res.send(object) // Ask Teddi about status not returning true
     })
     .catch(err => {
         res.status(404).send(err)

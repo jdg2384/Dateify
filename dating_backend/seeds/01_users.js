@@ -14,8 +14,17 @@ exports.seed = function(knex, Promise) {
           age_range: '20-30',
           radius: 30,
           desired_gender: 'female',
-          thumbs_up: '2',
-          thumbs_down: '0',
+          top_tracks: {
+            beetles: 'hello',
+            fish: 'some weird fish song',
+            fake_artist: 'fake_artist greatest hits',
+
+          },
+          top_artists: {
+            beetles: 'beetles',
+            fish: 'fish',
+            fake_artist: 'fake_artist',
+          },
         },
         {
           id: 2, 
@@ -26,8 +35,17 @@ exports.seed = function(knex, Promise) {
           age_range: '20-30',
           radius: 30,
           desired_gender: 'male',
-          thumbs_up: '1',
-          thumbs_down: '0',
+          top_tracks: {
+            beetles: 'hello',
+            fish: 'some weird fish song',
+            fake_artist: 'fake_artist greatest hits',
+
+          },
+          top_artists: {
+            beetles: 'beetles',
+            fish: 'fish',
+            fake_artist: 'fake_artist',
+          },
         },
         {
           id: 3, 
@@ -38,8 +56,17 @@ exports.seed = function(knex, Promise) {
           age_range: '20-30',
           radius: 30,
           desired_gender: 'male',
-          thumbs_up: '4',
-          thumbs_down: '2',
+          top_tracks: {
+            beetles: 'hello',
+            fish: 'some weird fish song',
+            fake_artist: 'fake_artist greatest hits',
+
+          },
+          top_artists: {
+            beetles: 'beetles',
+            fish: 'fish',
+            fake_artist: 'fake_artist',
+          },
         },
         {
           id: 4, 
@@ -50,8 +77,17 @@ exports.seed = function(knex, Promise) {
           age_range: '20-30',
           radius: 30,
           desired_gender: 'male',
-          thumbs_up: '3',
-          thumbs_down: '2',
+          top_tracks: {
+            beetles: 'hello',
+            fish: 'some weird fish song',
+            fake_artist: 'fake_artist greatest hits',
+
+          },
+          top_artists: {
+            beetles: 'beetles',
+            fish: 'fish',
+            fake_artist: 'fake_artist',
+          },
         }
       ]);
     });
