@@ -17,6 +17,9 @@ app.use(function(req, res, next) {
     next();
 });
 
+///////////////////////////////////////
+// ****** Users Table Routes ****** //
+
 // Get All Route
 app.get('/users', (req, res, next) => {
     knex('users')
@@ -100,7 +103,9 @@ app.delete('/users/:id',(req,res,next) => {
     })
 })
 
-// ****** Likes Routes ****** //
+
+///////////////////////////////////////
+// ****** Likes Table Routes ****** //
 
 // Get All Match **WORKING**
 app.get('/likes', (req, res, next) => {
