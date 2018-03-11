@@ -1,0 +1,169 @@
+const express =require('express')
+const app = express()
+const bodyParser = require('body-parser')
+const knex = require('./knex')
+const path = require('path');
+const port = process.env.PORT || 3000
+
+app.use(express.static('public'))
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
+// Headers Cors
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,POST,DELETE,PATCH,PUT");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+// Get All Route
+app.get('/users', (req, res, next) => {
+    knex('users')
+    .then(data=>{
+        res.status(200).send(data)
+    })
+})
+
+// Get One user
+app.get('/users/:id',(req,res,next) => {
+    console.log('logging',req)
+    let id = req.params.id;
+    knex('users')
+    .where('id',id)
+    .select('id','name','age','gender','photo','age_range',
+    'radius','desired_gender','thumbs_up','thumbs_down')
+    .then(data => {
+        res.send(data[0])
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+
+// Post New User **WORKING**
+app.post('/users', function(req, res, next){
+    knex('users').insert({
+        name: req.body.name, // From Spotify
+        age: req.body.age, 
+        gender: req.body.gender, 
+        photo: req.body.photo, 
+        age_range: req.body.age_range,
+        radius: req.body.radius,
+        desired_gender: req.body.desired_gender,
+        thumbs_up: req.body.thumbs_up,
+        thumbs_down: req.body.thumbs_down,
+    },'*') 
+    .then(user=>{
+        res.status(204).send({id:user[0].id})
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+
+// Patch User info **WORKING**
+app.patch('/users/:id',(req,res,next) => {
+    console.log('req body',req.body)
+    let id = req.params.id; 
+    knex('users')
+    .where('id',id)
+    .update({
+        age: req.body.age, 
+        gender: req.body.gender, 
+        photo: req.body.photo, 
+        age_range: req.body.age_range,
+        radius: req.body.radius,
+        desired_gender: req.body.desired_gender,
+    })
+    .then(data =>{
+        res.send(data[0])
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+// Delete User **WORKING**
+app.delete('/users/:id',(req,res,next) => {
+    let id = req.params.id;
+    let body = req.body;
+    knex('users')
+    .where('id',id)
+    .returning(['id','name','age','gender', 'gender', 'photo',
+    'age_range','radius','desired_gender','thumbs_up','thumbs_down'])
+    .del()
+    .then(data => {
+        res.send(data[0])
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+
+// ****** Likes Routes ****** //
+
+// Get All Match **WORKING**
+app.get('/likes', (req, res, next) => {
+    knex('likes')
+    .then(data=>{
+        res.status(200).send(data)
+    })
+})
+
+// Get One likes **WORKING**
+app.get('/likes/:id',(req,res,next) => {
+    let id = req.params.id;
+    console.log('logging',req.params.id)
+    knex('likes')
+    .where('id',id)
+    .select('id','user_id_one','user_id_two')
+    .then(data => {
+        res.send(data[0])
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+
+// Post All Match **WORKING**
+app.post('/likes', function(req, res, next){
+    knex('likes').insert({
+        user_id_one: req.body.user_id_one,
+        user_id_two: req.body.user_id_two,
+    },'*') 
+    .then(user=>{
+        res.status(204).send({id:user[0].id})
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+
+// Delete likes **WORKING**
+app.delete('/likes/:id',(req,res,next) => {
+    let id = req.params.id;
+    let body = req.body;
+    knex('likes')
+    .where('id',id)
+    .returning(['id','user_id_one','user_id_two'])
+    .del()
+    .then(data => {
+        res.send(data[0])
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+
+// Error Routes
+app.use((err, req, res, next) => {
+    const status = err.status || 404
+    res.status(status).json({ error: err })
+})
+app.use((req, res, next) => {
+    res.status(404).json({ error: { status: 404, message: 'Not found' }})
+})
+
+const listener = () => `Listening on port ${port}!`
+app.listen(port, listener)
+ 
