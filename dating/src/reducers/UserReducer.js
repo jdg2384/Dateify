@@ -1,5 +1,5 @@
-// info about user : top tracks, etc..
-import { INITIALIZE, UPDATE_PROPERTY, UPDATE_AGE, } from '../actions/types';
+// ANYTHING BEING RETURNED FROM SERVER/DB
+import { UPDATE_PROPERTY, UPDATE_AGE, } from '../actions/types';
 
 const INITIAL_STATE = {
   age: '',
@@ -18,9 +18,6 @@ export default (state = INITIAL_STATE, action) => {
 
 
   switch (action.type) {
-    case INITIALIZE: //unexpected lexical declaration?? 
-      const { name, token, imageURL, topTracks, topArtists } = action.payload;
-      return { ...state, name, token, imageURL, topTracks, topArtists };
     case UPDATE_PROPERTY:
       return { ...state, [action.payload.prop]: action.payload.value };
     case UPDATE_AGE:
