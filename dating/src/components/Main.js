@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
 import { Image, Text, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import Spotify from 'react-native-spotify';
 import { Card, CardSection, Button } from './common';
-import TrackList from './TrackList';
-import ArtistList from './ArtistList';
+// import TrackList from './TrackList';
+// import ArtistList from './ArtistList';
+import { initializeName, initializeImageURL } from '../actions';
 
 class Main extends Component {
-  // need to "redux-ify" all of this
-  state = {
-    name: '',
-    token: '',
-    imageURL: '',
-    topTracks: [],
-    topArtists: []
-  }
-
   async componentDidMount() {
     Spotify.getMe((res, error) => {
       if (res) {
-        console.log(res);
-        this.setState({ name: res.display_name, imageURL: res.images[0].url });
+        console.log(res.images[0]);
+        console.log('props', this.props);
+        this.props.initializeName(res.display_name);
+        // this.props.initializeImageURL();
       }
       if (error) {
         console.log('something went wrong');
@@ -28,7 +23,6 @@ class Main extends Component {
     });
     this.checkAuth();
   }
-
 
   // get users top 50 tracks
   async getTop(type) {
@@ -50,7 +44,7 @@ class Main extends Component {
     Spotify.getAuthAsync((res) => {
       console.log(res); // check token expire time - if it is less than __some amount__ from
       // current time --> use refresh token to request new one (following OAuth Encryption standards)
-      this.setState({ token: res.accessToken });
+      // this.setState({ token: res.accessToken });
     });
   }
 
@@ -61,7 +55,7 @@ class Main extends Component {
         <Card>
           <CardSection style={{ justifyContent: 'center' }}>
             <Text>
-              Welcome {this.state.name}!
+              Welcome {this.props.name}!
             </Text>
           </CardSection>
 
@@ -73,7 +67,7 @@ class Main extends Component {
           >
             <Image
               style={{ width: 300, height: 300 }}
-              source={{ uri: this.state.imageURL }}
+              source={{ uri: this.props.imageURL }}
             />
           </CardSection>
 
@@ -88,10 +82,10 @@ class Main extends Component {
               Get Top Artists
             </Button>
           </CardSection>
+{/*
+          <TrackList tracks={this.props.topTracks} />
 
-          <TrackList tracks={this.state.topTracks} />
-
-          <ArtistList artists={this.state.topArtists} />
+          <ArtistList artists={this.props.topArtists} /> */}
 
         </Card>
       </ScrollView>
@@ -99,4 +93,10 @@ class Main extends Component {
   }
 }
 
-export default Main;
+const mapStateToProps = state => {
+  const { name, imageURL, topTracks, topArtists } = state.spotify;
+
+  return { name, imageURL, topTracks, topArtists };
+};
+
+export default connect(mapStateToProps, { initializeName, initializeImageURL })(Main);

@@ -71,9 +71,9 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-  const { accessToken, expiresIn } = state.auth;
+  const { accessToken, expiresIn } = state.spotify;
 
   return { accessToken, expiresIn };
 };
 
-export default Login;
+export default connect(mapStateToProps, { loginUserSuccess })(Login);
