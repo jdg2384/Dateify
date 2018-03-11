@@ -76,4 +76,4 @@ const mapStateToProps = state => {
   return { accessToken, expiresIn };
 };
 
-export default connect(mapStateToProps, { loginUserSuccess })(Login);
+export default Login;
