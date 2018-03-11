@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import AuthReducer from './AuthReducer';
-import UserFormReducer from './UserFormReducer';
+import SpotifyReducer from './SpotifyReducer';
 import UserReducer from './UserReducer';
 
 export default combineReducers({
-  auth: AuthReducer,
-  formInfo: UserFormReducer,
+  spotify: SpotifyReducer,
   user: UserReducer
 });

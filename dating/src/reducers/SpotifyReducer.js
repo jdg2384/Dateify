@@ -3,10 +3,14 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  error: '',
-  loading: false, // do i need this?
+  name: '',
+  imageURL: '',
   accessToken: '',
   expiresIn: '',
+  topTracks: [],
+  topArtists: [],
+  error: '',
+  loading: false, // do i need this?
 };
 
 export default (state = INITIAL_STATE, action) => {
