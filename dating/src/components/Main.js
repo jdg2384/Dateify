@@ -3,6 +3,7 @@ import { Image, Text, ScrollView } from 'react-native';
 import Spotify from 'react-native-spotify';
 import { Card, CardSection, Button } from './common';
 import TrackList from './TrackList';
+import ArtistList from './ArtistList';
 
 class Main extends Component {
   // need to "redux-ify" all of this
@@ -31,7 +32,7 @@ class Main extends Component {
 
   // get users top 50 tracks
   async getTop(type) {
-    const response = await fetch(`https://api.spotify.com/v1/me/top/${type}`, {
+    const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?limit=50&time_range=long_term`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -77,12 +78,20 @@ class Main extends Component {
           </CardSection>
 
           <CardSection>
-            <Button>
-              Clicky
+            <Button onPress={() => this.getTop('tracks')}>
+              Get Top Tracks
             </Button>
           </CardSection>
 
-          <TrackList tracks={this.state.topTracks} onPress={() => this.getTop('tracks')} />
+          <CardSection>
+            <Button onPress={() => this.getTop('artists')}>
+              Get Top Artists
+            </Button>
+          </CardSection>
+
+          <TrackList tracks={this.state.topTracks} />
+
+          <ArtistList artists={this.state.topArtists} />
 
         </Card>
       </ScrollView>
