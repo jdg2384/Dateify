@@ -2,9 +2,9 @@ import {
   INITIALIZE
 } from './types';
 
-export const initializeUser = (dispatch, { name, token, imageURL, topTracks, topArtists }) => {
+export const initializeUser = (dispatch, payload) => {
   dispatch({
     type: INITIALIZE,
-    payload: { name, token, imageURL, topTracks, topArtists }
+    payload
   });
 };
