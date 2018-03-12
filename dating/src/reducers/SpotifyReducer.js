@@ -1,7 +1,8 @@
 // ANYTHING BEING RETURNED FROM SPOTIFY
 import {
   GET_NAME_AND_IMAGE,
-  GET_TOKEN_AND_EXPIRATION
+  GET_TOKEN_AND_EXPIRATION,
+  GET_MUSIC_INFO,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -32,7 +33,11 @@ export default (state = INITIAL_STATE, action) => {
         accessToken: action.payload.accessToken,
         expireTime: action.payload.expireTime
       };
-      
+    case GET_MUSIC_INFO:
+      return {
+        ...state,
+        [action.prop]: action.payload
+      };
     default:
       return state;
   }

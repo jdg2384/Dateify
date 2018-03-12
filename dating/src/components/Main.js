@@ -4,28 +4,13 @@ import { connect } from 'react-redux';
 import { Card, CardSection, Button } from './common';
 // import TrackList from './TrackList';
 // import ArtistList from './ArtistList';
-import { getNameAndImage, getTokenAndExpiration } from '../actions';
+import { getNameAndImage, getTokenAndExpiration, getMusicInfo } from '../actions';
 
 class Main extends Component {
   componentDidMount() {
     this.props.getNameAndImage();
     this.props.getTokenAndExpiration();
-    // this.checkAuth();
-  }
-
-  // get users top 50 tracks
-  async getTop(type) {
-    const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?limit=50&time_range=long_term`, {
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.state.token}`
-      })
-    });
-    const json = await response.json();
-    console.log(json);
-    if (type === 'tracks') this.setState({ topTracks: json.items, topArtists: [] });
-    if (type === 'artists') this.setState({ topArtists: json.items, topTracks: [] });
+    // this.props.getMusicInfo();
   }
 
 
@@ -52,13 +37,13 @@ class Main extends Component {
           </CardSection>
 
           <CardSection>
-            <Button onPress={() => this.getTop('tracks')}>
+            <Button onPress={() => this.props.getMusicInfo('tracks', this.props.accessToken)}>
               Get Top Tracks
             </Button>
           </CardSection>
 
           <CardSection>
-            <Button onPress={() => this.getTop('artists')}>
+            <Button onPress={() => this.props.getMusicInfo('artists', this.props.accessToken)}>
               Get Top Artists
             </Button>
           </CardSection>
@@ -74,9 +59,13 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  const { name, imageURL, accessToken, topTracks, topArtists } = state.spotify;
+  const { name, imageURL, accessToken, topTracks, topArtists, hasFetchedMusic } = state.spotify;
 
-  return { name, imageURL, accessToken, topTracks, topArtists };
+  return { name, imageURL, accessToken, topTracks, topArtists, hasFetchedMusic };
 };
 
-export default connect(mapStateToProps, { getNameAndImage, getTokenAndExpiration })(Main);
+export default connect(mapStateToProps, {
+  getNameAndImage,
+  getTokenAndExpiration,
+  getMusicInfo,
+})(Main);
