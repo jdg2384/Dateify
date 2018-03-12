@@ -5,7 +5,7 @@ import Spotify from 'react-native-spotify';
 import { Card, CardSection, Button } from './common';
 // import TrackList from './TrackList';
 // import ArtistList from './ArtistList';
-import { initializeName, initializeImageURL, getNameAndImage } from '../actions';
+import { getNameAndImage } from '../actions';
 
 class Main extends Component {
   componentDidMount() {
@@ -27,15 +27,6 @@ class Main extends Component {
     console.log(json);
     if (type === 'tracks') this.setState({ topTracks: json.items, topArtists: [] });
     if (type === 'artists') this.setState({ topArtists: json.items, topTracks: [] });
-  }
-
-  // sets users Auth token in state
-  async checkAuth() {
-    Spotify.getAuthAsync((res) => {
-      console.log(res); // check token expire time - if it is less than __some amount__ from
-      // current time --> use refresh token to request new one (following OAuth Encryption standards)
-      // this.setState({ token: res.accessToken });
-    });
   }
 
 
@@ -89,4 +80,4 @@ const mapStateToProps = state => {
   return { name, imageURL, topTracks, topArtists };
 };
 
-export default connect(mapStateToProps, { initializeName, initializeImageURL, getNameAndImage })(Main);
+export default connect(mapStateToProps, { getNameAndImage })(Main);

@@ -2,8 +2,6 @@
 
 import {
   GET_NAME_AND_IMAGE,
-  INITIALIZE_NAME,
-  INITIALIZE_IMAGE_URL
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -27,16 +25,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         name: action.payload.display_name,
         imageURL: action.payload.images[0].url,
-      };
-    case INITIALIZE_NAME:
-      return {
-        ...state,
-        name: action.payload.name
-      };
-    case INITIALIZE_IMAGE_URL:
-      return {
-        ...state,
-        imageURL: action.payload.url
       };
     // case LOGIN_USER_FAIL ?
 
