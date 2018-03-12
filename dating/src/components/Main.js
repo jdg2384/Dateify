@@ -59,9 +59,9 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  const { name, imageURL, accessToken, topTracks, topArtists, hasFetchedMusic } = state.spotify;
+  const { name, imageURL, accessToken, topTracks, topArtists } = state.spotify;
 
-  return { name, imageURL, accessToken, topTracks, topArtists, hasFetchedMusic };
+  return { name, imageURL, accessToken, topTracks, topArtists };
 };
 
 export default connect(mapStateToProps, {
