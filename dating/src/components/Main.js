@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { Image, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import Spotify from 'react-native-spotify';
 import { Card, CardSection, Button } from './common';
 // import TrackList from './TrackList';
 // import ArtistList from './ArtistList';
-import { getNameAndImage } from '../actions';
+import { getNameAndImage, getTokenAndExpiration } from '../actions';
 
 class Main extends Component {
   componentDidMount() {
     this.props.getNameAndImage();
-    // this.props.initializeName();
+    this.props.getTokenAndExpiration();
     // this.checkAuth();
   }
 
@@ -75,9 +74,9 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  const { name, imageURL, topTracks, topArtists } = state.spotify;
+  const { name, imageURL, accessToken, topTracks, topArtists } = state.spotify;
 
-  return { name, imageURL, topTracks, topArtists };
+  return { name, imageURL, accessToken, topTracks, topArtists };
 };
 
-export default connect(mapStateToProps, { getNameAndImage })(Main);
+export default connect(mapStateToProps, { getNameAndImage, getTokenAndExpiration })(Main);

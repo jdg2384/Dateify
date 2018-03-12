@@ -1,7 +1,7 @@
 // ANYTHING BEING RETURNED FROM SPOTIFY
-
 import {
   GET_NAME_AND_IMAGE,
+  GET_TOKEN_AND_EXPIRATION
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   name: '',
   imageURL: '',
   accessToken: '',
-  expiresIn: '',
+  expireTime: '',
   topTracks: [],
   topArtists: [],
   error: '',
@@ -26,8 +26,13 @@ export default (state = INITIAL_STATE, action) => {
         name: action.payload.display_name,
         imageURL: action.payload.images[0].url,
       };
-    // case LOGIN_USER_FAIL ?
-
+    case GET_TOKEN_AND_EXPIRATION:
+      return {
+        ...state,
+        accessToken: action.payload.accessToken,
+        expireTime: action.payload.expireTime
+      };
+      
     default:
       return state;
   }

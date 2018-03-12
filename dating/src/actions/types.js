@@ -4,3 +4,4 @@ export const UPDATE_AGE = 'update_age';
 export const RESET_AGE = 'reset_age';
 
 export const GET_NAME_AND_IMAGE = 'get_name_and_image';
+export const GET_TOKEN_AND_EXPIRATION = 'get_token_and_expiration';
