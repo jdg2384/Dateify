@@ -1,10 +1,10 @@
 import Spotify from 'react-native-spotify';
 import { Actions } from 'react-native-router-flux';
 import {
+  INITIALIZE_SPOTIFY,
   GET_NAME_AND_IMAGE,
   GET_TOKEN_AND_EXPIRATION,
   GET_MUSIC_INFO,
-  INITIALIZE_SPOTIFY
 } from './types';
 
 
