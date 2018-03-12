@@ -1,41 +1,16 @@
 import React, { Component } from 'react';
 import { Image, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import Spotify from 'react-native-spotify';
 import { Card, CardSection, Button } from './common';
 // import TrackList from './TrackList';
 // import ArtistList from './ArtistList';
-import { initializeName, initializeImageURL, getNameAndImage } from '../actions';
+import { getNameAndImage, getTokenAndExpiration, getMusicInfo } from '../actions';
 
 class Main extends Component {
   componentDidMount() {
     this.props.getNameAndImage();
-    // this.props.initializeName();
-    // this.checkAuth();
-  }
-
-  // get users top 50 tracks
-  async getTop(type) {
-    const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?limit=50&time_range=long_term`, {
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.state.token}`
-      })
-    });
-    const json = await response.json();
-    console.log(json);
-    if (type === 'tracks') this.setState({ topTracks: json.items, topArtists: [] });
-    if (type === 'artists') this.setState({ topArtists: json.items, topTracks: [] });
-  }
-
-  // sets users Auth token in state
-  async checkAuth() {
-    Spotify.getAuthAsync((res) => {
-      console.log(res); // check token expire time - if it is less than __some amount__ from
-      // current time --> use refresh token to request new one (following OAuth Encryption standards)
-      // this.setState({ token: res.accessToken });
-    });
+    this.props.getTokenAndExpiration();
+    // this.props.getMusicInfo();
   }
 
 
@@ -62,13 +37,13 @@ class Main extends Component {
           </CardSection>
 
           <CardSection>
-            <Button onPress={() => this.getTop('tracks')}>
+            <Button onPress={() => this.props.getMusicInfo('tracks', this.props.accessToken)}>
               Get Top Tracks
             </Button>
           </CardSection>
 
           <CardSection>
-            <Button onPress={() => this.getTop('artists')}>
+            <Button onPress={() => this.props.getMusicInfo('artists', this.props.accessToken)}>
               Get Top Artists
             </Button>
           </CardSection>
@@ -84,9 +59,13 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  const { name, imageURL, topTracks, topArtists } = state.spotify;
+  const { name, imageURL, accessToken, topTracks, topArtists } = state.spotify;
 
-  return { name, imageURL, topTracks, topArtists };
+  return { name, imageURL, accessToken, topTracks, topArtists };
 };
 
-export default connect(mapStateToProps, { initializeName, initializeImageURL, getNameAndImage })(Main);
+export default connect(mapStateToProps, {
+  getNameAndImage,
+  getTokenAndExpiration,
+  getMusicInfo,
+})(Main);

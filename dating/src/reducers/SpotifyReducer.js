@@ -1,17 +1,19 @@
 // ANYTHING BEING RETURNED FROM SPOTIFY
-
 import {
+  INITIALIZE_SPOTIFY,
   GET_NAME_AND_IMAGE,
-  INITIALIZE_NAME,
-  INITIALIZE_IMAGE_URL
+  GET_TOKEN_AND_EXPIRATION,
+  GET_MUSIC_INFO,
 } from '../actions/types';
 
 const INITIAL_STATE = {
+  spotifyInitialized: false,
+  loggedIn: false,
   me: '',
-  name: '',
+  name: 'New User',
   imageURL: '',
   accessToken: '',
-  expiresIn: '',
+  expireTime: '',
   topTracks: [],
   topArtists: [],
   error: '',
@@ -22,24 +24,28 @@ export default (state = INITIAL_STATE, action) => {
   console.log(action);
 
   switch (action.type) {
+    case INITIALIZE_SPOTIFY:
+      return {
+        ...state,
+        spotifyInitialized: true
+      };
     case GET_NAME_AND_IMAGE:
       return {
         ...state,
         name: action.payload.display_name,
         imageURL: action.payload.images[0].url,
       };
-    case INITIALIZE_NAME:
+    case GET_TOKEN_AND_EXPIRATION:
       return {
         ...state,
-        name: action.payload.name
+        accessToken: action.payload.accessToken,
+        expireTime: action.payload.expireTime
       };
-    case INITIALIZE_IMAGE_URL:
+    case GET_MUSIC_INFO:
       return {
         ...state,
-        imageURL: action.payload.url
+        [action.prop]: action.payload
       };
-    // case LOGIN_USER_FAIL ?
-
     default:
       return state;
   }
