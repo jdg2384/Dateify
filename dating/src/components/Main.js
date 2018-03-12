@@ -5,23 +5,13 @@ import Spotify from 'react-native-spotify';
 import { Card, CardSection, Button } from './common';
 // import TrackList from './TrackList';
 // import ArtistList from './ArtistList';
-import { initializeName, initializeImageURL } from '../actions';
+import { initializeName, initializeImageURL, getNameAndImage } from '../actions';
 
 class Main extends Component {
-  async componentDidMount() {
-    Spotify.getMe((res, error) => {
-      if (res) {
-        console.log(res.images[0]);
-        console.log('props', this.props);
-        this.props.initializeName(res.display_name);
-        // this.props.initializeImageURL();
-      }
-      if (error) {
-        console.log('something went wrong');
-        console.log(error);
-      }
-    });
-    this.checkAuth();
+  componentDidMount() {
+    this.props.getNameAndImage();
+    // this.props.initializeName();
+    // this.checkAuth();
   }
 
   // get users top 50 tracks
@@ -99,4 +89,4 @@ const mapStateToProps = state => {
   return { name, imageURL, topTracks, topArtists };
 };
 
-export default connect(mapStateToProps, { initializeName, initializeImageURL })(Main);
+export default connect(mapStateToProps, { initializeName, initializeImageURL, getNameAndImage })(Main);

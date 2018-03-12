@@ -35,7 +35,7 @@ class Login extends Component {
 				this.setState({ spotifyInitialized: true });
 				//handle initialization
 				if (loggedIn) {
-					console.log('logged in!');
+					// console.log('logged in!');
           // this.props.loginUserSuccess();
           // have to call login first before calling loginUserSuccess
           Actions.main();

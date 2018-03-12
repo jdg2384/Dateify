@@ -1,12 +1,13 @@
 // ANYTHING BEING RETURNED FROM SPOTIFY
 
 import {
-  LOGIN_USER_SUCCESS,
+  GET_NAME_AND_IMAGE,
   INITIALIZE_NAME,
   INITIALIZE_IMAGE_URL
 } from '../actions/types';
 
 const INITIAL_STATE = {
+  me: '',
   name: '',
   imageURL: '',
   accessToken: '',
@@ -21,6 +22,12 @@ export default (state = INITIAL_STATE, action) => {
   console.log(action);
 
   switch (action.type) {
+    case GET_NAME_AND_IMAGE:
+      return {
+        ...state,
+        name: action.payload.display_name,
+        imageURL: action.payload.images[0].url,
+      };
     case INITIALIZE_NAME:
       return {
         ...state,
