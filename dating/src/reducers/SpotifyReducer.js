@@ -1,13 +1,16 @@
 // ANYTHING BEING RETURNED FROM SPOTIFY
 import {
+  INITIALIZE_SPOTIFY,
   GET_NAME_AND_IMAGE,
   GET_TOKEN_AND_EXPIRATION,
   GET_MUSIC_INFO,
 } from '../actions/types';
 
 const INITIAL_STATE = {
+  spotifyInitialized: false,
+  loggedIn: false,
   me: '',
-  name: '',
+  name: 'New User',
   imageURL: '',
   accessToken: '',
   expireTime: '',
@@ -21,6 +24,11 @@ export default (state = INITIAL_STATE, action) => {
   console.log(action);
 
   switch (action.type) {
+    case INITIALIZE_SPOTIFY:
+      return {
+        ...state,
+        spotifyInitialized: true
+      };
     case GET_NAME_AND_IMAGE:
       return {
         ...state,

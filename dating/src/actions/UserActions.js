@@ -1,5 +1,5 @@
 import {
-  INITIALIZE
+  INITIALIZE,
 } from './types';
 
 export const initializeUser = (dispatch, payload) => {

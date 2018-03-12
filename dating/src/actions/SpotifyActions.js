@@ -1,10 +1,54 @@
 import Spotify from 'react-native-spotify';
+import { Actions } from 'react-native-router-flux';
 import {
   GET_NAME_AND_IMAGE,
   GET_TOKEN_AND_EXPIRATION,
   GET_MUSIC_INFO,
-  TOGGLE
+  INITIALIZE_SPOTIFY
 } from './types';
+
+
+const spotifyOptions = {
+  clientID: 'f4a3b66de8d54f50bb290003986af099',
+  sessionUserDefaultsKey: 'SpotifySession',
+  redirectURL: 'spotifydating://returnafterlogin',
+  scopes: ['user-read-private',
+  'playlist-read',
+  'playlist-read-private',
+  'streaming',
+  'user-top-read'],
+  //tokenSwapURL,
+  //tokenRefreshURL
+};
+
+
+export const initializeSpotify = () => {
+  return (dispatch) => {
+    Spotify.initialize(spotifyOptions, (loggedIn, error) => {
+      if (error) console.log(error.message);
+      dispatch({ type: INITIALIZE_SPOTIFY });
+      //handle initialization
+      if (loggedIn) {
+        console.log(loggedIn);
+        Actions.main();
+      }
+    });
+  };
+};
+
+export const login = () => {
+  return () => {
+    Spotify.login((loggedIn, error) => {
+      if (error) console.log(error);
+      if (loggedIn) {
+        // ** Check if user has required info already -  if not, take them to form page
+        // ** If they do have required info - go to main page
+        console.log('great success');
+        Actions.main();
+      }
+    });
+  };
+};
 
 export const getNameAndImage = () => {
   return (dispatch) => {
@@ -42,6 +86,7 @@ export const getMusicInfo = (prop, token) => {
     })
     .then(response => response.json())
     .then(json => {
+
       // console.log(json.items);
       if (prop === 'artists') {
         dispatch({ type: GET_MUSIC_INFO, prop: 'topArtists', payload: json.items });
