@@ -25,6 +25,7 @@ exports.seed = function(knex, Promise) {
             fish: 'fish',
             fake_artist: 'fake_artist',
           },
+          thumbs_down: [],
         },
         {
           id: 2, 
@@ -66,6 +67,10 @@ exports.seed = function(knex, Promise) {
             beetles: 'beetles',
             fish: 'fish',
             fake_artist: 'fake_artist',
+          },
+          thumbs_down: {
+            id: 3,
+            id: 4,
           },
         },
         {

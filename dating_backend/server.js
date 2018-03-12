@@ -30,7 +30,6 @@ app.get('/users', (req, res, next) => {
 
 // Get One user
 app.get('/users/:id',(req,res,next) => {
-    console.log('logging',req)
     let id = req.params.id;
     knex('users')
     .where('id',id)
@@ -54,8 +53,9 @@ app.post('/users', function(req, res, next){
         age_range: req.body.age_range,
         radius: req.body.radius,
         desired_gender: req.body.desired_gender,
-        thumbs_up: req.body.thumbs_up,
-        thumbs_down: req.body.thumbs_down,
+        top_tracks: req.body.top_tracks,
+        top_artists: req.body.top_tracks,
+        // thumbs_down: id+':'+req.body.thumbs_down,
     },'*') 
     .then(user=>{
         res.status(204).send({id:user[0].id})
@@ -67,7 +67,6 @@ app.post('/users', function(req, res, next){
 
 // Patch User info **WORKING**
 app.patch('/users/:id',(req,res,next) => {
-    console.log('req body',req.body)
     let id = req.params.id; 
     knex('users')
     .where('id',id)
@@ -78,6 +77,7 @@ app.patch('/users/:id',(req,res,next) => {
         age_range: req.body.age_range,
         radius: req.body.radius,
         desired_gender: req.body.desired_gender,
+        thumbs_down: req.body.thumbs_down,
     })
     .then(data =>{
         res.send(data[0])
@@ -86,6 +86,7 @@ app.patch('/users/:id',(req,res,next) => {
         res.status(404).send(err)
     })
 })
+
 // Delete User **WORKING**
 app.delete('/users/:id',(req,res,next) => {
     let id = req.params.id;
@@ -141,7 +142,6 @@ app.post('/likes', function(req, res, next){
         return knex('likes').where({'user_id_two': user_id_one, 'user_id_one': user_id_two})
     })
     .then(match=>{
-        console.log(match)
         const object = {
             match: false
         }
@@ -166,6 +166,58 @@ app.delete('/likes/:id',(req,res,next) => {
     .del()
     .then(data => {
         res.send(data[0])
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+
+///////////////////////////////////////
+// ****** dislikes Table Routes ****** //
+
+app.get('/dislikes', (req, res, next) => {
+    knex('dislikes')
+    .then(data=>{
+        res.status(200).send(data)
+    })
+})
+
+app.get('/dislikes/:id',(req,res,next) => {
+    let id = req.params.id;
+    knex('dislikes')
+    .where('user_id_one',id)
+    .select('dislikesUser')
+    .then(data => {
+        let newData =data.map(item => {
+            return item.dislikesUser
+        })
+        //console.log(newData)
+        res.send(newData)
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+})
+
+app.post('/dislikes', function(req, res, next){
+    const { user_id_one, dislikesUser } = req.body
+    knex('dislikes').insert({
+        user_id_one: user_id_one,
+        dislikesUser: dislikesUser,
+    },'*') 
+    .then(()=>{
+        return knex('dislikes').where({'user_id_one': user_id_one})
+        .returning('dislikesUser')
+    })
+    .then(match=>{
+        const object = {
+            match: false
+        }
+        if(match[0]){
+            object.match = true
+            object.matchInfo = match[0]
+        }
+        res.send(object) // Ask Teddi about status not returning true
     })
     .catch(err => {
         res.status(404).send(err)
