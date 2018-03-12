@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Image, TouchableHighlight } from 'react-native';
 import { Card, CardSection, Button } from './common';
 import { initializeSpotify, login } from '../actions';
 
