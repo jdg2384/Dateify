@@ -10,6 +10,7 @@ exports.up = function(knex, Promise) {
         table.string('desired_gender').notNullable();
         table.jsonb('top_tracks').notNullable();
         table.jsonb('top_artists').notNullable();
+        table.jsonb('thumbs_down',)
         // table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
         // table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));
     })
