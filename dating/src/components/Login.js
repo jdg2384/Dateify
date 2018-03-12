@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, TouchableHighlight, Text, StyleSheet, View } from 'react-native';
-import { Card, CardSection, Button } from './common';
 import { initializeSpotify, login } from '../actions';
+import loginButton from '../assets/login-button-mobile.png';
 
 class Login extends Component {
   componentDidMount() {
@@ -20,7 +20,11 @@ class Login extends Component {
           Spotify Dating
         </Text>
         <TouchableHighlight style={button} onPress={() => this.props.login()}>
-          <Image resizeMode={'contain'} style={image} source={require('../assets/login-button-mobile.png')} />
+          <Image
+            resizeMode={'contain'}
+            style={image}
+            source={loginButton}
+          />
         </TouchableHighlight>
       </View>
     );
@@ -47,13 +51,6 @@ const styles = StyleSheet.create({
   },
   normalText: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: 'white'
-  },
-  btnText: {
-    fontSize: 25,
-    fontWeight: 'bold',
     textAlign: 'center',
     margin: 10,
     color: 'white'
