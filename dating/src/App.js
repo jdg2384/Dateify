@@ -8,7 +8,6 @@ import Router from './Router';
 console.disableYellowBox = true;
 
 class App extends Component {
-
   render() {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
@@ -18,7 +17,6 @@ class App extends Component {
       </Provider>
     );
   }
-
 }
 
 export default App;

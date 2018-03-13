@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { Image, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Card, CardSection, Button } from './common';
-// import TrackList from './TrackList';
-// import ArtistList from './ArtistList';
+import TrackList from './TrackList';
+import ArtistList from './ArtistList';
 import { getNameAndImage, getTokenAndExpiration, getMusicInfo } from '../actions';
 
 class Main extends Component {
   componentDidMount() {
     this.props.getNameAndImage();
     this.props.getTokenAndExpiration();
-    // this.props.getMusicInfo();
+    // if (this.props.accessToken) {
+    //   console.log('inside conditional');
+    //   this.props.getMusicInfo('artists', this.props.accessToken);
+    // }
   }
 
 
@@ -47,10 +50,10 @@ class Main extends Component {
               Get Top Artists
             </Button>
           </CardSection>
-{/*
+
           <TrackList tracks={this.props.topTracks} />
 
-          <ArtistList artists={this.props.topArtists} /> */}
+          <ArtistList artists={this.props.topArtists} />
 
         </Card>
       </ScrollView>
