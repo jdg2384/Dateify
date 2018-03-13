@@ -1,5 +1,9 @@
 // ANYTHING BEING RETURNED FROM SERVER/DB
-import { UPDATE_PROPERTY, UPDATE_AGE, GET_USER_LOCATION, } from '../actions/types';
+import {
+  UPDATE_PROPERTY,
+  UPDATE_AGE,
+  GET_USER_LOCATION,
+} from '../actions/types';
 
 const INITIAL_STATE = {
   age: '',
