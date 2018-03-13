@@ -33,8 +33,8 @@ app.get('/users/:id',(req,res,next) => {
     let id = req.params.id;
     knex('users')
     .where('id',id)
-    .select('id','name','age','gender','photo','age_range',
-    'radius','desired_gender','thumbs_up','thumbs_down')
+    .select('id','spotify_id','name','age','gender','photo','age_range',
+    'radius','desired_gender')
     .then(data => {
         res.send(data[0])
     })
@@ -47,6 +47,7 @@ app.get('/users/:id',(req,res,next) => {
 app.post('/users', function(req, res, next){
     knex('users').insert({
         name: req.body.name, // From Spotify
+        spotify_id: req.body.spotify_id,
         age: req.body.age, 
         gender: req.body.gender, 
         photo: req.body.photo, 
@@ -71,6 +72,7 @@ app.patch('/users/:id',(req,res,next) => {
     knex('users')
     .where('id',id)
     .update({
+        spotify_id: req.body.spotify_id,
         age: req.body.age, 
         gender: req.body.gender, 
         photo: req.body.photo, 
@@ -93,7 +95,7 @@ app.delete('/users/:id',(req,res,next) => {
     let body = req.body;
     knex('users')
     .where('id',id)
-    .returning(['id','name','age','gender', 'gender', 'photo',
+    .returning(['id','name','spotify_id','age','gender', 'gender', 'photo',
     'age_range','radius','desired_gender','thumbs_up','thumbs_down'])
     .del()
     .then(data => {
