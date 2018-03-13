@@ -28,7 +28,6 @@ export const initializeSpotify = () => {
       dispatch({ type: INITIALIZE_SPOTIFY });
       //handle initialization
       if (loggedIn) {
-        console.log(loggedIn);
         Actions.main();
       }
     });
@@ -87,10 +86,10 @@ export const getMusicInfo = (prop, token) => {
     .then(json => {
       // console.log(json.items);
       if (prop === 'artists') {
-        dispatch({ type: GET_MUSIC_INFO, prop: 'topArtists', payload: json.items });
+        dispatch({ type: GET_MUSIC_INFO, prop: 'topArtists', reset: 'topTracks', payload: json.items });
       }
       if (prop === 'tracks') {
-        dispatch({ type: GET_MUSIC_INFO, prop: 'topTracks', payload: json.items });
+        dispatch({ type: GET_MUSIC_INFO, prop: 'topTracks', reset: 'topArtists', payload: json.items });
       }
     });
   };

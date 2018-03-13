@@ -44,7 +44,8 @@ export default (state = INITIAL_STATE, action) => {
     case GET_MUSIC_INFO:
       return {
         ...state,
-        [action.prop]: action.payload
+        [action.prop]: action.payload,
+        [action.reset]: []
       };
     default:
       return state;
