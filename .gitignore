@@ -2,3 +2,4 @@
 dating/node_modules
 node_modules
 dating/ios/build
+ios/dating.xcodeproj/project.xcworkspace
