@@ -15,7 +15,6 @@ const spotifyOptions = {
   scopes: ['user-read-private',
   'playlist-read',
   'playlist-read-private',
-  'streaming',
   'user-top-read'],
   //tokenSwapURL,
   //tokenRefreshURL
@@ -86,7 +85,6 @@ export const getMusicInfo = (prop, token) => {
     })
     .then(response => response.json())
     .then(json => {
-
       // console.log(json.items);
       if (prop === 'artists') {
         dispatch({ type: GET_MUSIC_INFO, prop: 'topArtists', payload: json.items });
