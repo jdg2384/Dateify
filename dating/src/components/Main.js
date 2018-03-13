@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Image, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { Card, CardSection, Button } from './common';
 import TrackList from './TrackList';
 import ArtistList from './ArtistList';
-import { getNameAndImage, getTokenAndExpiration, getMusicInfo, getUserLocation } from '../actions';
+import {
+  getNameAndImage,
+  getTokenAndExpiration,
+  getMusicInfo,
+  getUserLocation,
+ } from '../actions';
 
 class Main extends Component {
   componentDidMount() {
@@ -59,6 +65,13 @@ class Main extends Component {
           <CardSection>
             <Button onPress={() => this.props.getMusicInfo('artists', this.props.accessToken)}>
               Get Top Artists
+            </Button>
+          </CardSection>
+
+
+          <CardSection>
+            <Button onPress={() => Actions.auth()}>
+              Logout
             </Button>
           </CardSection>
 
