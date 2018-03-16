@@ -1,10 +1,12 @@
 import Spotify from 'react-native-spotify';
 import { Actions } from 'react-native-router-flux';
+import axios from 'axios'
 import {
   INITIALIZE_SPOTIFY,
   GET_NAME_AND_IMAGE,
   GET_TOKEN_AND_EXPIRATION,
   GET_MUSIC_INFO,
+  UPDATE_NAME
 } from './types';
 
 
@@ -103,3 +105,11 @@ export const getMusicInfo = (prop, token) => {
     });
   };
 };
+
+export const updateName = (value) => {
+  return {
+      type: UPDATE_NAME,
+      payload: value
+  }
+};
+

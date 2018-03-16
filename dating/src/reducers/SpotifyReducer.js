@@ -4,6 +4,7 @@ import {
   GET_NAME_AND_IMAGE,
   GET_TOKEN_AND_EXPIRATION,
   GET_MUSIC_INFO,
+  UPDATE_NAME
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -47,6 +48,8 @@ export default (state = INITIAL_STATE, action) => {
         [action.prop]: action.payload,
         [action.reset]: []
       };
+      case UPDATE_NAME:
+        return { ...state, name: action.payload };
     default:
       return state;
   }

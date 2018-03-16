@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import axios from 'axios';
 import { Card, CardSection, Button } from './common';
 import TrackList from './TrackList';
 import ArtistList from './ArtistList';
@@ -10,6 +11,7 @@ import {
   getTokenAndExpiration,
   getMusicInfo,
   getUserLocation,
+  userInfo,
  } from '../actions';
 
 class Main extends Component {
@@ -17,6 +19,7 @@ class Main extends Component {
     this.props.getNameAndImage();
     this.props.getTokenAndExpiration();
     this.props.getUserLocation();
+    this.props.userInfo();
     // need to figure out how to chain this to the end of getToken so that
     // token has a value when I go to request music info
     // also check whether it (top music info) is already in database
@@ -27,8 +30,8 @@ class Main extends Component {
     // }
   }
 
-
   render() {
+    //console.log('Props on Main.js',this.props)
     return (
       <ScrollView style={{ flex: 1 }}>
         <Card>
@@ -97,4 +100,5 @@ export default connect(mapStateToProps, {
   getTokenAndExpiration,
   getMusicInfo,
   getUserLocation,
+  userInfo,
 })(Main);

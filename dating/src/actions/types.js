@@ -1,8 +1,10 @@
 // user
+export const UPDATE_NAME = 'UPDATE_NAME';
 export const UPDATE_PROPERTY = 'update_property';
 export const UPDATE_AGE = 'update_age';
 export const RESET_AGE = 'reset_age';
 export const GET_USER_LOCATION = 'get_user_location';
+export const USER_INFO = 'user_info';
 
 // spotify
 export const INITIALIZE_SPOTIFY = 'initialize_spotify';

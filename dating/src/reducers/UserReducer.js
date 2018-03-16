@@ -1,11 +1,14 @@
 // ANYTHING BEING RETURNED FROM SERVER/DB
 import {
-  UPDATE_PROPERTY,
+  UPDATE_NAME,
   UPDATE_AGE,
   GET_USER_LOCATION,
+  USER_INFO,
+  UPDATE_PROPERTY
 } from '../actions/types';
 
 const INITIAL_STATE = {
+  name:'',
   age: '',
   gender: '',
   description: 'I\'m not clever enough to write something interesting here',
@@ -19,14 +22,15 @@ const INITIAL_STATE = {
 
 
 export default (state = INITIAL_STATE, action) => {
-  console.log(action);
-
   switch (action.type) {
     case UPDATE_PROPERTY:
       return { ...state, [action.payload.prop]: action.payload.value };
     case UPDATE_AGE:
-      return { ...state, age: action.value };
+      return { ...state, age: action.payload };
       // check out direct manipulation (from bookmarks) to clear text input on faulty input
+    case USER_INFO:
+      const { gender, age, age_range, radius } = action.payload // description, lat, long 
+      return { ...state, gender, age, age_range, radius }
     case GET_USER_LOCATION:
       return {
         ...state,
