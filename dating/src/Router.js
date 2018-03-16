@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Main from './components/Main';
 import ChatList from './components/ChatList';
 import UserInfoForm from './components/UserInfoForm';
+import ChatExample from './components/ChatExample';
 
 // eslint-disable-next-line
 const RouterComponent = () => {
@@ -24,11 +25,12 @@ const RouterComponent = () => {
           }}
           rightTitle="Chat List"
           onRight={() => {
-            Actions.chat();
+            Actions.chatEx();
           }}
           />
           <Scene key="userInfoForm" component={UserInfoForm} title="About Me" />
           <Scene key="chat" component={ChatList} title="Chat List" />
+          <Scene key="chatEx" component={ChatExample} title="Example" />
         </Scene>
       </Scene>
     </Router>
