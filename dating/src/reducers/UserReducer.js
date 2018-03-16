@@ -3,6 +3,8 @@ import {
   UPDATE_PROPERTY,
   UPDATE_AGE,
   GET_USER_LOCATION,
+  ROOM_JOINED,
+  SEND_MESSAGE,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -15,6 +17,8 @@ const INITIAL_STATE = {
   radiusPref: '',
   agePref: '',
   loading: false,
+  messages: [],
+  socket: null
 };
 
 
@@ -32,6 +36,15 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         latitude: action.payload.coords.latitude,
         longitude: action.payload.coords.longitude
+      };
+    case ROOM_JOINED:
+      console.log(action.payload);
+      return { ...state, socket: action.payload };
+    case SEND_MESSAGE:
+      console.log(state.messages, action.payload);
+      return {
+        ...state,
+        messages: [...state.messages, action.payload]
       };
     default:
       return state;
