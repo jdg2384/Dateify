@@ -19,8 +19,8 @@ class UserInfoForm extends Component {
             label="Age"
             keyboardType="numeric" // numeric keyboard isnt working on simulator for whatever reason
             placeholder="i.e. 25"
-            value={this.props.age}
-            onChangeText={value => this.props.updateAge(value)}
+            // value={this.props.age}
+            // onChangeText={value => this.props.updateAge(value)}
           />
         </CardSection>
 
@@ -28,8 +28,8 @@ class UserInfoForm extends Component {
           <Text>Gender</Text>
           <Picker
             selectedValue={this.props.gender}
-            value={this.props.gender}
-            onValueChange={value => this.props.updateProperty({ prop: 'gender', value })}
+            // value={this.props.gender}
+            // onValueChange={value => this.props.updateProperty({ prop: 'gender', value })}
           >
             <Picker.Item label="Male" value="male" />
             <Picker.Item label="Female" value="female" />
@@ -48,10 +48,12 @@ class UserInfoForm extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { age, gender } = state.formInfo;
+// const mapStateToProps = state => {
+  // const { age, gender } = state.formInfo;
+  //
+  // return { age, gender };
+// };
 
-  return { age, gender };
-};
+export default UserInfoForm;
 
-export default connect(mapStateToProps, { updateProperty, updateAge })(UserInfoForm);
+// export default connect(mapStateToProps, { updateProperty, updateAge })(UserInfoForm);

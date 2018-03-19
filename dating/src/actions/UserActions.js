@@ -32,6 +32,7 @@ export const joinRoom = () => {
   socket = SocketIOClient('http://localhost:3000', { jsonp: false, transports: ['websocket'] });
 
   socket.emit('joinTable1', 'table1'); // will have to make these dynamic
+  // room name is table 1 right now -- will have to make the room name the match number
 
   // Actions.table()
   console.log(socket);
@@ -44,10 +45,16 @@ export const joinRoom = () => {
 export const sendMessage = (message) => {
   return async (dispatch) => {
     socket.emit('sendMessage', message);
-    dispatch({
-      type: SEND_MESSAGE,
-      payload: message
-    });
+    // dispatch({
+    //   type: SEND_MESSAGE,
+    //   payload: message
+    // });
     console.log('message send', message);
+    socket.on('server message response', (data) => {
+      dispatch({
+        type: SEND_MESSAGE,
+        payload: data
+      });
+    });
   };
 };

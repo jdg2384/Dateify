@@ -8,6 +8,7 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
+  id: '',
   age: '',
   gender: '',
   description: 'I\'m not clever enough to write something interesting here',
@@ -44,7 +45,7 @@ export default (state = INITIAL_STATE, action) => {
       console.log(state.messages, action.payload);
       return {
         ...state,
-        messages: [...state.messages, action.payload]
+        messages: action.payload
       };
     default:
       return state;

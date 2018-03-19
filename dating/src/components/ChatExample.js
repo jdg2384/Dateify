@@ -12,13 +12,14 @@ class Messages extends Component {
 
   componentDidMount() {
     this.props.joinRoom();
+    this.props.sendMessage();
   }
 
   render() {
     return (
       <View>
         <MessageList messages={this.props.messages} />
-        <View style={{ marginTop: 450, justifyContent: 'flex-end' }}>
+        <View style={{ marginTop: 400, justifyContent: 'flex-end' }}>
           <TextInput
           style={{
             height: 40,

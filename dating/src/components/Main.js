@@ -6,7 +6,7 @@ import { Card, CardSection, Button } from './common';
 import TrackList from './TrackList';
 import ArtistList from './ArtistList';
 import {
-  getNameAndImage,
+  getNameImageId,
   getTokenAndExpiration,
   getMusicInfo,
   getUserLocation,
@@ -14,7 +14,7 @@ import {
 
 class Main extends Component {
   componentDidMount() {
-    this.props.getNameAndImage();
+    this.props.getNameImageId();
     this.props.getTokenAndExpiration();
     this.props.getUserLocation();
     // need to figure out how to chain this to the end of getToken so that
@@ -93,7 +93,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  getNameAndImage,
+  getNameImageId,
   getTokenAndExpiration,
   getMusicInfo,
   getUserLocation,
