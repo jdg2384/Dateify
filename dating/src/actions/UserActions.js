@@ -3,9 +3,16 @@ import SocketIOClient from 'socket.io-client';
 import {
   INITIALIZE,
   GET_USER_LOCATION,
+
   ROOM_JOINED,
   SEND_MESSAGE
+
+  UPDATE_AGE,
+  UPDATE_PROPERTY,
+  USER_POST
+
 } from './types';
+import axios from 'axios';
 
 let socket = '';
 
@@ -26,6 +33,7 @@ export const getUserLocation = () => {
     // });
   };
 };
+
 
 export const joinRoom = () => {
   console.log('in this room');
@@ -58,3 +66,59 @@ export const sendMessage = (message) => {
     });
   };
 };
+
+export const userInfo = (id) => {
+  return () => {
+    axios.get(`https://intense-spire-14562.herokuapp.com/users/${id}`) // ${id}
+    .then(response => response)
+    .then(data => {
+      //console.log('data userinfo',data)
+      dispatch({
+        type: USER_INFO,
+        payload: data,
+      });
+    })
+  }
+}
+
+export const updateAge = (value) => {
+  return {
+      type: UPDATE_AGE,
+      payload: value
+  };
+};
+
+export const updateProperty = ({ prop, value }) => {
+  return {
+    type: UPDATE_PROPERTY,
+    payload: { prop, value }
+  };
+};
+
+export const userPost=(userData)=>{
+  console.log('userPost Click ',userData)
+  return () => {
+    axios.post('https://intense-spire-14562.herokuapp.com/users', {
+      age: userData
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+}
+
+// return () => {
+//   axios.get(`https://intense-spire-14562.herokuapp.com/users/1`) // ${id}
+//   .then(response => response)
+//   .then(data => {
+//     //console.log('data userinfo',data)
+//     dispatch({
+//       type: USER_INFO,
+//       payload: data,
+//     });
+//   })
+// }
+

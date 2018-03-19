@@ -1,22 +1,28 @@
 // ANYTHING BEING RETURNED FROM SERVER/DB
 import {
-  UPDATE_PROPERTY,
+  UPDATE_NAME,
   UPDATE_AGE,
   GET_USER_LOCATION,
+
   ROOM_JOINED,
   SEND_MESSAGE,
+  USER_INFO,
+  UPDATE_PROPERTY,
+  USER_POST
 } from '../actions/types';
+
 
 const INITIAL_STATE = {
   id: '',
+  name:'',
   age: '',
   gender: '',
   description: 'I\'m not clever enough to write something interesting here',
   latitude: '',
   longitude: '',
-  genderPref: '',
-  radiusPref: '',
-  agePref: '',
+  desired_gender: '',
+  radius: '',
+  age_range: '',
   loading: false,
   messages: [],
   socket: null
@@ -24,14 +30,17 @@ const INITIAL_STATE = {
 
 
 export default (state = INITIAL_STATE, action) => {
-  console.log(action);
-
   switch (action.type) {
+    case USER_POST:
+      return {...state};
     case UPDATE_PROPERTY:
       return { ...state, [action.payload.prop]: action.payload.value };
     case UPDATE_AGE:
-      return { ...state, age: action.value };
+      return { ...state, age: action.payload };
       // check out direct manipulation (from bookmarks) to clear text input on faulty input
+    case USER_INFO:
+      const { gender, age, age_range, radius } = action.payload // description, lat, long 
+      return { ...state, gender, age, age_range, radius }
     case GET_USER_LOCATION:
       return {
         ...state,

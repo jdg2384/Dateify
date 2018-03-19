@@ -1,59 +1,115 @@
 import React, { Component } from 'react';
 import { Picker, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, CardSection, Input, Button } from './common';
-import { updateProperty, updateAge } from '../actions';
+import { Form, Item, Label, Input, Button } from 'native-base';
+import { Card, CardSection} from './common';
 
-// need to add sections for:
-// description
-// age range
-// radius
-// desired gender
+import TrackList from './TrackList';
+import ArtistList from './ArtistList';
+
+import { 
+  getNameAndImage,
+  getTokenAndExpiration,
+  getMusicInfo,
+  getUserLocation,
+  userInfo,
+  updateName,
+  updateAge,
+  updateProperty,
+  userPost
+} from '../actions';
 
 class UserInfoForm extends Component {
+  
+  componentDidMount() {
+    this.props.getNameAndImage();
+    this.props.getTokenAndExpiration();
+    this.props.getUserLocation();
+    this.props.userInfo();
+    this.props.userPost()
+    console.log('Prop user info',this.props)
+  }
+  
+  componentWillUnmount(props) {
+    this.props.userPost()
+    //console.log('Component Will Receive Props',this.props.user)
+  }
+  
   render() {
+    //console.log('this state ', this.state)
     return (
-      <Card>
-        <CardSection>
-          <Input
-            label="Age"
-            keyboardType="numeric" // numeric keyboard isnt working on simulator for whatever reason
-            placeholder="i.e. 25"
-            // value={this.props.age}
-            // onChangeText={value => this.props.updateAge(value)}
-          />
-        </CardSection>
 
-        <CardSection style={{ flexDirection: 'column' }}>
-          <Text>Gender</Text>
-          <Picker
-            selectedValue={this.props.gender}
-            // value={this.props.gender}
-            // onValueChange={value => this.props.updateProperty({ prop: 'gender', value })}
-          >
-            <Picker.Item label="Male" value="male" />
-            <Picker.Item label="Female" value="female" />
-          </Picker>
-        </CardSection>
+      <Form>
+        <Item fixedLabel>
+          <Label>Name</Label>
+          <Input type='text' value={this.props.name} onChangeText={(value) => this.props.updateProperty(value)}></Input>
+        </Item>
+        <Item fixedLabel>
+          <Label>age</Label>
+          <Input type='text' value={this.props.age} onChangeText={(value) => this.props.updateProperty({prop:'age', value})}></Input>
+        </Item>
+        <Item fixedLabel>
+          <Label>Description</Label>
+          <Input type='text' value={this.props.description} onChangeText={(value) => this.props.updateProperty({prop:'description', value})}></Input>
+        </Item>
+        <Item fixedLabel>
+          <Label>Gender</Label>
+          <Input type='text' value={this.props.gender} onChangeText={(value) => this.props.updateProperty({prop:'gender', value})}></Input>
+        </Item>
+        <Item fixedLabel>
+          <Label>Perfered Match Gender</Label>
+          <Input type='text' value={this.props.desired_gender} onChangeText={(value) => this.props.updateProperty({prop:'desired_gender', value})}></Input>
+        </Item>
+        <Item fixedLabel>
+          <Label>Age Range</Label>
+          <Input type='text' value={this.props.age_range} onChangeText={(value) => this.props.updateProperty({prop:'age_range', value})}></Input>
+        </Item>
+        <Item fixedLabel>
+          <Label>Radius</Label>
+          <Input type='text' value={this.props.radius} onChangeText={(value) => this.props.updateProperty({prop:'radius', value})}></Input>
+        </Item>
+        <Button rounded success>
+          <Text onPress={() => 
+            {
+              const { gender, description, desired_gender, age, age_range, radius, name, imageURL, spotifyID } = this.props
+              const obj = {
+              spotify_id: 1241242323412,
+              name: name,
+              age: age,
+              gender: gender,
+              photo: imageURL,
+              description: description,
+              desired_gender: desired_gender,
+              radius: radius,
+              age_range: age_range,
+            }
+            this.props.userPost(obj)}}>
+            Success
+          </Text>
+        </Button>
+      </Form>
 
-        <CardSection>
-          <Button>Upload Photos</Button>
-        </CardSection>
-
-        <CardSection>
-          <Button>Submit</Button>
-        </CardSection>
-      </Card>
     );
   }
 }
 
-// const mapStateToProps = state => {
-  // const { age, gender } = state.formInfo;
-  //
-  // return { age, gender };
-// };
+const mapStateToProps = state => {
+  const { name, imageURL, spotifyID, topTracks, topArtists } = state.spotify;
+  const { gender, description, desired_gender, age, age_range, radius } = state.user;
+  return { gender, description, desired_gender, age, age_range, radius, name, imageURL, spotifyID, topTracks, topArtists };
 
-export default UserInfoForm;
+  
+};
 
-// export default connect(mapStateToProps, { updateProperty, updateAge })(UserInfoForm);
+export default connect(mapStateToProps, { 
+  getNameAndImage,
+  getTokenAndExpiration,
+  getMusicInfo,
+  getUserLocation,
+  userInfo,
+  updateName,
+  updateAge,
+  updateProperty,
+  userPost,
+})(UserInfoForm);
+
