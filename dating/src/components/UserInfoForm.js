@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Picker, Text } from 'react-native';
+import { View, Image, Text, ScrollView, Picker, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Form, Item, Label, Input, Button } from 'native-base';
 import { Card, CardSection} from './common';
@@ -21,25 +21,16 @@ import {
 
 class UserInfoForm extends Component {
   
-  componentDidMount() {
-    this.props.getNameAndImage();
-    this.props.getTokenAndExpiration();
-    this.props.getUserLocation();
-    this.props.userInfo();
-    this.props.userPost()
-    console.log('Prop user info',this.props)
-  }
-  
   componentWillUnmount(props) {
-    this.props.userPost()
-    //console.log('Component Will Receive Props',this.props.user)
+    userPost()
   }
   
   render() {
-    //console.log('this state ', this.state)
     return (
-
-      <Form>
+      <Form style={styles.form}>
+        <View style={styles.container}>
+          <Image style={styles.titleStyle} source={{ uri: this.props.imageURL }}/>
+        </View>
         <Item fixedLabel>
           <Label>Name</Label>
           <Input type='text' value={this.props.name} onChangeText={(value) => this.props.updateProperty(value)}></Input>
@@ -49,7 +40,7 @@ class UserInfoForm extends Component {
           <Input type='text' value={this.props.age} onChangeText={(value) => this.props.updateProperty({prop:'age', value})}></Input>
         </Item>
         <Item fixedLabel>
-          <Label>Description</Label>
+          <Label style={styles.description}>Description</Label>
           <Input type='text' value={this.props.description} onChangeText={(value) => this.props.updateProperty({prop:'description', value})}></Input>
         </Item>
         <Item fixedLabel>
@@ -71,9 +62,9 @@ class UserInfoForm extends Component {
         <Button rounded success>
           <Text onPress={() => 
             {
-              const { gender, description, desired_gender, age, age_range, radius, name, imageURL, spotifyID } = this.props
+              const { gender, description, desired_gender, age, age_range, radius, name, imageURL, spotifyID, topTracks, topArtists } = this.props
               const obj = {
-              spotify_id: 1241242323412,
+              spotify_id: 1241242323412, // Not Working 
               name: name,
               age: age,
               gender: gender,
@@ -82,7 +73,19 @@ class UserInfoForm extends Component {
               desired_gender: desired_gender,
               radius: radius,
               age_range: age_range,
+              
+              top_tracks: topTracks.reduce((prev,curr) =>{
+                              let key = curr.name
+                              prev[key] = `${key}`
+                              return prev
+                            },{}),
+              top_artists:  topArtists.reduce((prev,curr) =>{
+                              let key = curr.name
+                              prev[key] = key
+                              return prev
+                            },{})
             }
+            console.log(obj);
             this.props.userPost(obj)}}>
             Success
           </Text>
@@ -92,6 +95,29 @@ class UserInfoForm extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  form: {
+    backgroundColor: '#fff', 
+  },
+  description: {
+    height: 40,
+  },
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  titleStyle: {
+      margin:15,
+      height:300,
+      width:300,
+      borderRadius: 300/2,
+      borderWidth: 4,
+      borderColor: "#51ba5e",
+      justifyContent: 'center',
+      alignItems: 'center'
+  }
+})
 
 const mapStateToProps = state => {
   const { name, imageURL, spotifyID, topTracks, topArtists } = state.spotify;
