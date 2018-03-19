@@ -31,7 +31,7 @@ class Main extends Component {
   }
 
   render() {
-    //console.log('Props on Main.js',this.props)
+    console.log('Main.js',this.props.topTracks)
     return (
       <ScrollView style={{ flex: 1 }}>
         <Card>

@@ -4,7 +4,8 @@ import {
   UPDATE_AGE,
   GET_USER_LOCATION,
   USER_INFO,
-  UPDATE_PROPERTY
+  UPDATE_PROPERTY,
+  USER_POST
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -14,15 +15,17 @@ const INITIAL_STATE = {
   description: 'I\'m not clever enough to write something interesting here',
   latitude: '',
   longitude: '',
-  genderPref: '',
-  radiusPref: '',
-  agePref: '',
+  desired_gender: '',
+  radius: '',
+  age_range: '',
   loading: false,
 };
 
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case USER_POST:
+      return {...state};
     case UPDATE_PROPERTY:
       return { ...state, [action.payload.prop]: action.payload.value };
     case UPDATE_AGE:
