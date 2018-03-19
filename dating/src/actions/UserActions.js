@@ -2,7 +2,8 @@ import {
   INITIALIZE,
   GET_USER_LOCATION,
   UPDATE_AGE,
-  UPDATE_PROPERTY
+  UPDATE_PROPERTY,
+  USER_POST
 } from './types';
 import axios from 'axios';
 
@@ -26,7 +27,7 @@ export const getUserLocation = () => {
 
 export const userInfo = (id) => {
   return () => {
-    axios.get(`https://intense-spire-14562.herokuapp.com/users/1`) // ${id}
+    axios.get(`https://intense-spire-14562.herokuapp.com/users/${id}`) // ${id}
     .then(response => response)
     .then(data => {
       //console.log('data userinfo',data)
@@ -52,14 +53,29 @@ export const updateProperty = ({ prop, value }) => {
   };
 };
 
-export const userDataClickHandler=(userData)=>{
-  axios.post('https://intense-spire-14562.herokuapp.com/users', {
-    userData
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+export const userPost=(userData)=>{
+  console.log('userPost Click ',userData)
+  return () => {
+    axios.post('https://intense-spire-14562.herokuapp.com/users', {
+      age: userData
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 }
+
+// return () => {
+//   axios.get(`https://intense-spire-14562.herokuapp.com/users/1`) // ${id}
+//   .then(response => response)
+//   .then(data => {
+//     //console.log('data userinfo',data)
+//     dispatch({
+//       type: USER_INFO,
+//       payload: data,
+//     });
+//   })
+// }

@@ -2,6 +2,7 @@
 export const UPDATE_NAME = 'UPDATE_NAME';
 export const UPDATE_PROPERTY = 'update_property';
 export const UPDATE_AGE = 'update_age';
+export const USER_POST = 'user_post'
 export const RESET_AGE = 'reset_age';
 export const GET_USER_LOCATION = 'get_user_location';
 export const USER_INFO = 'user_info';
