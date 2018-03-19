@@ -16,22 +16,25 @@ import {
 
 class Main extends Component {
   componentDidMount() {
-    this.props.getNameImageId();
     this.props.getTokenAndExpiration();
+    this.props.getNameImageId();
     this.props.getUserLocation();
     this.props.userInfo();
     // need to figure out how to chain this to the end of getToken so that
     // token has a value when I go to request music info
     // also check whether it (top music info) is already in database
+  }
 
-    // if (this.props.accessToken) {
-    //   console.log('inside conditional');
-    //   this.props.getMusicInfo('artists', this.props.accessToken);
-    // }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.accessToken !== nextProps.accessToken) {
+      console.log('inside conditional');
+      console.log('next >', nextProps.accessToken);
+      this.props.getMusicInfo('artists', nextProps.accessToken);
+      this.props.getMusicInfo('tracks', nextProps.accessToken);
+    }
   }
 
   render() {
-    console.log('Main.js',this.props.topTracks)
     return (
       <ScrollView style={{ flex: 1 }}>
         <Card>
