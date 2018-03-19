@@ -47,7 +47,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         [action.prop]: action.payload,
-        [action.reset]: []
+        // [action.reset]: []
       };
       case UPDATE_NAME:
         return { ...state, name: action.payload };
