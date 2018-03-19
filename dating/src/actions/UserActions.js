@@ -3,15 +3,14 @@ import SocketIOClient from 'socket.io-client';
 import {
   INITIALIZE,
   GET_USER_LOCATION,
-
   ROOM_JOINED,
-  SEND_MESSAGE
-
+  SEND_MESSAGE,
   UPDATE_AGE,
   UPDATE_PROPERTY,
   USER_POST
 
 } from './types';
+
 import axios from 'axios';
 
 let socket = '';
@@ -121,4 +120,3 @@ export const userPost=(userData)=>{
 //     });
 //   })
 // }
-
