@@ -1,6 +1,6 @@
 import Spotify from 'react-native-spotify';
 import { Actions } from 'react-native-router-flux';
-import axios from 'axios'
+import axios from 'axios';
 import {
   INITIALIZE_SPOTIFY,
   GET_NAME_AND_IMAGE,
@@ -75,8 +75,8 @@ export const getTokenAndExpiration = () => {
 
 export const getMusicInfo = (prop, token) => {
   return (dispatch, getState) => {
-    const { accessToken } = getState();
-    console.log('token', accessToken);
+    // const { accessToken } = getState();
+    // console.log('token', accessToken);
 
     fetch(`https://api.spotify.com/v1/me/top/${prop}?limit=50&time_range=long_term`, {
       method: 'GET',
@@ -91,7 +91,7 @@ export const getMusicInfo = (prop, token) => {
         dispatch({
           type: GET_MUSIC_INFO,
           prop: 'topArtists',
-          reset: 'topTracks',
+          // reset: 'topTracks',
           payload: json.items
         });
       }
@@ -99,7 +99,7 @@ export const getMusicInfo = (prop, token) => {
         dispatch({
           type: GET_MUSIC_INFO,
           prop: 'topTracks',
-          reset: 'topArtists',
+          // reset: 'topArtists',
           payload: json.items
         });
       }
@@ -113,5 +113,3 @@ export const updateName = (value) => {
       payload: value
   }
 };
-
-
