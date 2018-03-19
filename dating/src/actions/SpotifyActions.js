@@ -43,16 +43,17 @@ export const login = () => {
       if (loggedIn) {
         // ** Check if user has required info already -  if not, take them to form page
         // ** If they do have required info - go to main page
-        console.log('great success');
+        console.log(loggedIn);
         Actions.main();
       }
     });
   };
 };
 
-export const getNameAndImage = () => {
+// and id
+export const getNameImageId = () => {
   return (dispatch) => {
-    Spotify.getMe((res, error) => {
+    return Spotify.getMe((res, error) => {
       if (res) {
         dispatch({ type: GET_NAME_AND_IMAGE, payload: res });
       }
@@ -112,4 +113,5 @@ export const updateName = (value) => {
       payload: value
   }
 };
+
 

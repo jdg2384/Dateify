@@ -38,6 +38,7 @@ class UserInfoForm extends Component {
   render() {
     //console.log('this state ', this.state)
     return (
+
       <Form>
         <Item fixedLabel>
           <Label>Name</Label>
@@ -87,6 +88,7 @@ class UserInfoForm extends Component {
           </Text>
         </Button>
       </Form>
+
     );
   }
 }
@@ -110,3 +112,4 @@ export default connect(mapStateToProps, {
   updateProperty,
   userPost,
 })(UserInfoForm);
+

@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   me: '',
   name: 'New User',
   imageURL: '',
+  spotifyID: '',
   accessToken: '',
   expireTime: '',
   topTracks: [],
@@ -22,7 +23,7 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  //console.log(action);
+
   switch (action.type) {
     case INITIALIZE_SPOTIFY:
       return {
@@ -34,6 +35,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         name: action.payload.display_name,
         imageURL: action.payload.images[0].url,
+        spotifyID: action.payload.id
       };
     case GET_TOKEN_AND_EXPIRATION:
       return {

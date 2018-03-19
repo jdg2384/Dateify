@@ -7,7 +7,7 @@ import { Card, CardSection, Button } from './common';
 import TrackList from './TrackList';
 import ArtistList from './ArtistList';
 import {
-  getNameAndImage,
+  getNameImageId,
   getTokenAndExpiration,
   getMusicInfo,
   getUserLocation,
@@ -16,7 +16,7 @@ import {
 
 class Main extends Component {
   componentDidMount() {
-    this.props.getNameAndImage();
+    this.props.getNameImageId();
     this.props.getTokenAndExpiration();
     this.props.getUserLocation();
     this.props.userInfo();
@@ -90,13 +90,13 @@ class Main extends Component {
 
 const mapStateToProps = state => {
   const { name, imageURL, accessToken, topTracks, topArtists } = state.spotify;
-  const { latitude, longitude } = state.user;
+  const { latitude, longitude, messages } = state.user;
 
-  return { name, imageURL, accessToken, topTracks, topArtists, latitude, longitude };
+  return { name, imageURL, accessToken, topTracks, topArtists, latitude, longitude, messages };
 };
 
 export default connect(mapStateToProps, {
-  getNameAndImage,
+  getNameImageId,
   getTokenAndExpiration,
   getMusicInfo,
   getUserLocation,
