@@ -27,16 +27,22 @@ class Main extends Component {
       this.props.getMusicInfo('tracks', nextProps.accessToken);
     }
   }
-
+  
   render() {
+    console.log('main props',this.props)
     return (
       <ScrollView style={{ flex: 1 }}>
+      
         <Card>
           <CardSection style={{ justifyContent: 'center' }}>
             <Text>
               Welcome {this.props.name}!
             </Text>
+            <Text>
+              {/* Welcome {this.props.matches[0].name}! */}
+            </Text>
           </CardSection>
+
 
           <CardSection
             style={{
@@ -62,11 +68,12 @@ class Main extends Component {
   }
 }
 
+
 const mapStateToProps = state => {
   const { name, imageURL, accessToken, topTracks, topArtists } = state.spotify;
-  const { latitude, longitude, messages } = state.user;
-
-  return { name, imageURL, accessToken, topTracks, topArtists, latitude, longitude, messages };
+  const { userInfo, latitude, longitude, messages, gender } = state.user;
+  console.log('state', state)
+  return { name, imageURL, accessToken, topTracks, topArtists, latitude, longitude, messages, userInfo};
 };
 
 export default connect(mapStateToProps, {
@@ -76,3 +83,5 @@ export default connect(mapStateToProps, {
   getUserLocation,
   userInfo,
 })(Main);
+
+// Not see userInfo Dispatch

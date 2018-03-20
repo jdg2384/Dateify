@@ -9,9 +9,11 @@ import {
   UPDATE_AGE,
   UPDATE_PROPERTY,
   USER_POST,
+  USER_INFO
   SET_CHAT_ID,
   INITIALIZE_MESSAGES,
   NEXT
+
 } from './types';
 
 
@@ -66,14 +68,13 @@ export const sendMessage = (message, matchId) => {
 };
 
 export const userInfo = (id) => {
-  return () => {
-    axios.get(`https://intense-spire-14562.herokuapp.com/users/${id}`) // ${id}
+  return (dispatch) => {
+    axios.get(`https://intense-spire-14562.herokuapp.com/users`) 
     .then(response => response)
     .then(data => {
-      //console.log('data userinfo',data)
       dispatch({
         type: USER_INFO,
-        payload: data,
+        payload: data.data,
       });
     })
   }

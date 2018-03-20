@@ -16,24 +16,32 @@ import {
 
 const INITIAL_STATE = {
   id: '',
-  name: '',
-  age: '',
-  gender: '',
-  description: 'I\'m not clever enough to write something interesting here',
+
+  name:'',
+  age: '24',
+  gender: 'Male',
+  description: 'I love lamp',
+
+ 
   latitude: '',
   longitude: '',
-  desired_gender: '',
+  desired_gender: 'Female',
   radius: '',
   age_range: '',
   loading: false,
   messages: [],
   socket: null,
+
+  userInfo: null,
+
   matchId: null,
   currentIndex: 0,
+
 };
 
 
 export default (state = INITIAL_STATE, action) => {
+  //console.log('actions',action)
   switch (action.type) {
     case USER_POST:
       return { ...state };
@@ -43,8 +51,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, age: action.payload };
       // check out direct manipulation (from bookmarks) to clear text input on faulty input
     case USER_INFO:
+
       const { gender, age, age_range, radius } = action.payload; // description, lat, long
       return { ...state, gender, age, age_range, radius };
+
     case GET_USER_LOCATION:
       return {
         ...state,
