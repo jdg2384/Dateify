@@ -3,7 +3,6 @@ import {
   UPDATE_NAME,
   UPDATE_AGE,
   GET_USER_LOCATION,
-
   ROOM_JOINED,
   SEND_MESSAGE,
   USER_INFO,
@@ -25,11 +24,13 @@ const INITIAL_STATE = {
   age_range: '',
   loading: false,
   messages: [],
-  socket: null
+  socket: null,
+  userInfo: null,
 };
 
 
 export default (state = INITIAL_STATE, action) => {
+  //console.log('actions',action)
   switch (action.type) {
     case USER_POST:
       return {...state};
@@ -39,8 +40,9 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, age: action.payload };
       // check out direct manipulation (from bookmarks) to clear text input on faulty input
     case USER_INFO:
-      const { gender, age, age_range, radius } = action.payload // description, lat, long 
-      return { ...state, gender, age, age_range, radius }
+    console.log(action.payload)
+      const { gender, age, age_range, radius } = action.payload
+      return { ...state, userInfo: action.payload };
     case GET_USER_LOCATION:
       return {
         ...state,

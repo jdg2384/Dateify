@@ -177,8 +177,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   button: {
-    justifyContent: 'center',
-    alignItems: 'center',
     marginLeft:140,
     marginTop: 30,
     marginBottom: 30,
