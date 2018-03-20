@@ -13,7 +13,7 @@ import Dating from './components/Dating';
 
 import Chat from './assets/chat.png';
 import Profile from './assets/profile.png';
-import Logo2 from './assets/logo4.png';
+import Logo from './assets/logo4.png';
 import hp from './assets/hp.png';
 import babe from './assets/babe.png';
 import three from './assets/3.png';
@@ -28,9 +28,9 @@ const RouterComponent = () => {
         </Scene>
         <Scene key="main">
           <Scene
-          component={Main}
+          component={Dating}
           navigationBarStyle={{ backgroundColor: 'white' }}
-          navigationBarTitleImage={Logo2}
+          navigationBarTitleImage={Logo}
           navigationBarTitleImageStyle={{ height: 40, width: 65 }}
           initial
           leftButtonImage={Chat}
