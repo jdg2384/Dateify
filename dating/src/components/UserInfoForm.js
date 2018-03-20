@@ -79,7 +79,8 @@ class UserInfoForm extends Component {
           <Label>Age Range</Label>
           <Input type='text' value={this.props.age_range} onChangeText={(value) => this.props.updateProperty({prop:'age_range', value})}></Input>
         </Item> */}
-        {/* <Button rounded success>
+        <View style={styles.container}>
+        <Button style={styles.button}>
           <Text onPress={() => 
             {
               const { gender, description, desired_gender, age, age_range, radius, name, imageURL, spotifyID, topTracks, topArtists } = this.props
@@ -107,9 +108,10 @@ class UserInfoForm extends Component {
             }
             console.log(obj);
             this.props.userPost(obj)}}>
-            Success
+            Submit
           </Text>
-        </Button> */}
+        </Button>
+        </View>
       </Form>
       </ScrollView>
 
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
   },
   descriptionLabel:{
     marginTop: -50,
-    marginLeft: 10,
+    marginLeft: 15,
   },
   genderMatch:{
     color:'#585858',
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E2E2E2',
+    backgroundColor: '#F8F8F8',
     padding: 25,
   },
   welcome: {
@@ -173,6 +175,15 @@ const styles = StyleSheet.create({
   },
   marginPicker: {
     textAlign: 'left',
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft:140,
+    marginTop: 30,
+    marginBottom: 30,
+    backgroundColor: "#51ba5e",
+    padding:20,
   }
 })
 
