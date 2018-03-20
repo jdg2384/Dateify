@@ -1,4 +1,5 @@
 import SocketIOClient from 'socket.io-client';
+import axios from 'axios';
 
 import {
   INITIALIZE,
@@ -7,11 +8,12 @@ import {
   SEND_MESSAGE,
   UPDATE_AGE,
   UPDATE_PROPERTY,
-  USER_POST
-
+  USER_POST,
+  SET_CHAT_ID,
+  INITIALIZE_MESSAGES,
+  NEXT
 } from './types';
 
-import axios from 'axios';
 
 let socket = '';
 
@@ -34,30 +36,27 @@ export const getUserLocation = () => {
 };
 
 
-export const joinRoom = () => {
-  console.log('in this room');
-  socket = SocketIOClient('http://localhost:3000', { jsonp: false, transports: ['websocket'] });
+export const joinRoom = (matchId) => {
+  socket = SocketIOClient('http://localhost:3001', { jsonp: false, transports: ['websocket'] });
 
-  socket.emit('joinTable1', 'table1'); // will have to make these dynamic
-  // room name is table 1 right now -- will have to make the room name the match number
+  socket.emit('joinChat', matchId);
 
-  // Actions.table()
-  console.log(socket);
   return {
     type: ROOM_JOINED,
     payload: socket
   };
 };
 
-export const sendMessage = (message) => {
+export const sendMessage = (message, matchId) => {
   return async (dispatch) => {
-    socket.emit('sendMessage', message);
+    socket.emit('sendMessage', message, matchId);
     // dispatch({
     //   type: SEND_MESSAGE,
     //   payload: message
     // });
-    console.log('message send', message);
+    console.log('message send', message, matchId);
     socket.on('server message response', (data) => {
+      console.log(data);
       dispatch({
         type: SEND_MESSAGE,
         payload: data
@@ -94,8 +93,8 @@ export const updateProperty = ({ prop, value }) => {
   };
 };
 
-export const userPost=(userData)=>{
-  console.log('userPost Click ',userData)
+export const userPost = (userData) => {
+  console.log('userPost Click ', userData)
   return () => {
     axios.post('https://intense-spire-14562.herokuapp.com/users', {
       age: userData
@@ -108,6 +107,42 @@ export const userPost=(userData)=>{
     });
   }
 }
+
+export const setChatId = matchId => {
+  console.log(matchId);
+  return {
+    type: SET_CHAT_ID,
+    payload: matchId
+  };
+};
+
+export const fetchMessages = (matchId) => {
+  return (dispatch) => {
+    fetch(`http://localhost:3000/messages/${matchId}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+    .then(response => response.json())
+    .then(json => {
+      const messages = json.map(message => message.text);
+      console.log(messages);
+      // console.log(json);
+      dispatch({
+        type: INITIALIZE_MESSAGES,
+        payload: messages
+      });
+    });
+  };
+};
+
+export const goToNext = currentIndex => {
+  return {
+    type: NEXT,
+    payload: currentIndex + 1,
+  };
+};
 
 // return () => {
 //   axios.get(`https://intense-spire-14562.herokuapp.com/users/1`) // ${id}
