@@ -7,8 +7,8 @@ import { Card, CardSection} from './common';
 import TrackList from './TrackList';
 import ArtistList from './ArtistList';
 
-import { 
-  getNameAndImage,
+import {
+  getNameImageId,
   getTokenAndExpiration,
   getMusicInfo,
   getUserLocation,
@@ -20,7 +20,7 @@ import {
 } from '../actions';
 
 class UserInfoForm extends Component {
-  
+
   componentWillUnmount(props) {
     userPost()
   }
@@ -30,7 +30,8 @@ class UserInfoForm extends Component {
   }
   getVal(val){
     console.warn(val);
-    }    
+  }    
+
   render() {
     return (
       <ScrollView >
@@ -78,10 +79,20 @@ class UserInfoForm extends Component {
         {/* <Item fixedLabel>
           <Label>Age Range</Label>
           <Input type='text' value={this.props.age_range} onChangeText={(value) => this.props.updateProperty({prop:'age_range', value})}></Input>
+
         </Item> */}
         <View style={styles.container}>
         <Button style={styles.button}>
           <Text onPress={() => 
+
+        </Item>
+        <Item fixedLabel>
+          <Label>Radius</Label>
+          <Input type='text' value={this.props.radius} onChangeText={(value) => this.props.updateProperty({prop:'radius', value})}></Input>
+        </Item>
+        <Button rounded success>
+          <Text onPress={() =>
+
             {
               const { gender, description, desired_gender, age, age_range, radius, name, imageURL, spotifyID, topTracks, topArtists } = this.props
               const obj = {
@@ -191,8 +202,8 @@ const mapStateToProps = state => {
   return { gender, description, desired_gender, age, age_range, radius, name, imageURL, spotifyID, topTracks, topArtists };
 };
 
-export default connect(mapStateToProps, { 
-  getNameAndImage,
+export default connect(mapStateToProps, {
+  getNameImageId,
   getTokenAndExpiration,
   getMusicInfo,
   getUserLocation,
@@ -202,4 +213,3 @@ export default connect(mapStateToProps, {
   updateProperty,
   userPost,
 })(UserInfoForm);
-

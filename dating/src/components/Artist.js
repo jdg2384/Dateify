@@ -5,8 +5,8 @@ import { CardSection } from './common';
 const Artist = (artist) => {
   return (
     <CardSection style={{ flex: 1 }}>
-      <Text>
-        {artist.artist.name}
+      <Text style={{ marginLeft: 5, fontFamily: 'HelveticaNeue-Light' }}>
+        {artist.artist}
       </Text>
     </CardSection>
   );

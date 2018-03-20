@@ -44,7 +44,7 @@ export const login = () => {
       if (loggedIn) {
         // ** Check if user has required info already -  if not, take them to form page
         // ** If they do have required info - go to main page
-        console.log(loggedIn);
+        // console.log(loggedIn);
         Actions.main();
       }
     });
@@ -75,7 +75,7 @@ export const getTokenAndExpiration = () => {
 };
 
 export const getMusicInfo = (prop, token) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     // const { accessToken } = getState();
     // console.log('token', accessToken);
 

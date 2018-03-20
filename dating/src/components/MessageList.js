@@ -4,7 +4,8 @@ import Message from './Message';
 
 class MessageList extends Component {
   render() {
-    const messages = this.props.messages;
+    console.log(this.props.messages[0]);
+    const messages = this.props.messages[0] || this.props.messages;
     return (
       <ScrollView>
         {messages.map(message => (<Message

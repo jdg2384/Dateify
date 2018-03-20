@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { Card, CardSection, Button } from './common';
-import TrackList from './TrackList';
-import ArtistList from './ArtistList';
+
 import {
   getNameImageId,
   getTokenAndExpiration,
@@ -20,15 +19,10 @@ class Main extends Component {
     this.props.getNameImageId();
     this.props.getUserLocation();
     this.props.userInfo();
-    // need to figure out how to chain this to the end of getToken so that
-    // token has a value when I go to request music info
-    // also check whether it (top music info) is already in database
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.accessToken !== nextProps.accessToken) {
-      console.log('inside conditional');
-      console.log('next >', nextProps.accessToken);
       this.props.getMusicInfo('artists', nextProps.accessToken);
       this.props.getMusicInfo('tracks', nextProps.accessToken);
     }
@@ -49,14 +43,6 @@ class Main extends Component {
             </Text>
           </CardSection>
 
-          <CardSection style={{ justifyContent: 'center' }}>
-            <Text>
-              Lat: {this.props.latitude}, Long: {this.props.longitude}
-            </Text>
-            <Text>
-              Lat: {this.props.gender}
-            </Text>
-          </CardSection>
 
           <CardSection
             style={{
@@ -71,27 +57,10 @@ class Main extends Component {
           </CardSection>
 
           <CardSection>
-            <Button onPress={() => this.props.getMusicInfo('tracks', this.props.accessToken)}>
-              Get Top Tracks
+            <Button onPress={() => Actions.dating()}>
+              Dating
             </Button>
           </CardSection>
-
-          <CardSection>
-            <Button onPress={() => this.props.getMusicInfo('artists', this.props.accessToken)}>
-              Get Top Artists
-            </Button>
-          </CardSection>
-
-
-          <CardSection>
-            <Button onPress={() => Actions.auth()}>
-              Logout
-            </Button>
-          </CardSection>
-
-          <TrackList tracks={this.props.topTracks} />
-
-          <ArtistList artists={this.props.topArtists} />
 
         </Card>
       </ScrollView>
