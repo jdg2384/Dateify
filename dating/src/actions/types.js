@@ -2,12 +2,15 @@
 export const UPDATE_NAME = 'UPDATE_NAME';
 export const UPDATE_PROPERTY = 'update_property';
 export const UPDATE_AGE = 'update_age';
-export const USER_POST = 'user_post'
+export const USER_POST = 'user_post';
 export const RESET_AGE = 'reset_age';
 export const GET_USER_LOCATION = 'get_user_location';
 
 export const ROOM_JOINED = 'room_joined';
 export const SEND_MESSAGE = 'send_message';
+export const SET_CHAT_ID = 'set_chat_id';
+export const INTIALIZE_MESSAGES = 'initialize_messages';
+export const NEXT = 'next';
 
 export const USER_INFO = 'user_info';
 

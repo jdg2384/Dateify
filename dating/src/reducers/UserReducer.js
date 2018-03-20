@@ -3,18 +3,20 @@ import {
   UPDATE_NAME,
   UPDATE_AGE,
   GET_USER_LOCATION,
-
   ROOM_JOINED,
   SEND_MESSAGE,
   USER_INFO,
+  INITIALIZE_MESSAGES,
   UPDATE_PROPERTY,
-  USER_POST
+  USER_POST,
+  SET_CHAT_ID,
+  NEXT
 } from '../actions/types';
 
 
 const INITIAL_STATE = {
   id: '',
-  name:'',
+  name: '',
   age: '',
   gender: '',
   description: 'I\'m not clever enough to write something interesting here',
@@ -25,22 +27,24 @@ const INITIAL_STATE = {
   age_range: '',
   loading: false,
   messages: [],
-  socket: null
+  socket: null,
+  matchId: null,
+  currentIndex: 0,
 };
 
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_POST:
-      return {...state};
+      return { ...state };
     case UPDATE_PROPERTY:
       return { ...state, [action.payload.prop]: action.payload.value };
     case UPDATE_AGE:
       return { ...state, age: action.payload };
       // check out direct manipulation (from bookmarks) to clear text input on faulty input
     case USER_INFO:
-      const { gender, age, age_range, radius } = action.payload // description, lat, long 
-      return { ...state, gender, age, age_range, radius }
+      const { gender, age, age_range, radius } = action.payload; // description, lat, long
+      return { ...state, gender, age, age_range, radius };
     case GET_USER_LOCATION:
       return {
         ...state,
@@ -48,10 +52,20 @@ export default (state = INITIAL_STATE, action) => {
         longitude: action.payload.coords.longitude
       };
     case ROOM_JOINED:
-      console.log(action.payload);
       return { ...state, socket: action.payload };
+    case SET_CHAT_ID:
+      return { ...state, matchId: action.payload };
     case SEND_MESSAGE:
       console.log(state.messages, action.payload);
+      return {
+        ...state,
+        messages: action.payload
+      };
+    case NEXT:
+      return { ...state, currentIndex: action.payload }
+    case INITIALIZE_MESSAGES:
+      console.log('HIT IT');
+      console.log(action.payload);
       return {
         ...state,
         messages: action.payload

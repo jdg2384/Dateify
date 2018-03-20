@@ -3,10 +3,11 @@ import { Text } from 'react-native';
 import { CardSection } from './common';
 
 const Track = (track) => {
+  console.log(track);
   return (
     <CardSection style={{ flex: 1 }}>
-      <Text>
-        {track.track.name} - {track.track.artists[0].name}
+      <Text style={{ marginLeft: 5, fontFamily: 'HelveticaNeue-Light' }}>
+        {track.track.name} - {track.track.artist}
       </Text>
     </CardSection>
   );
