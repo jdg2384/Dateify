@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View, Image } from 'react-native';
 import { connect } from 'react-redux';
+import Modal from 'react-native-modal';
 import { Icon, Container } from 'native-base';
 import { Button, Card, CardSection } from './common';
 import { goToNext } from '../actions';
+import Logo from '../assets/logo4.png';
 
 const users = [
   { name: 'Kalina' },
@@ -18,6 +20,18 @@ const users = [
 ];
 
 class Dating extends Component {
+  state = {
+    isModalVisible: false
+  };
+
+   _hideModal = () => this.setState({ isModalVisible: false });
+
+   _showModal = () => this.setState({ isModalVisible: true });
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentIndex === 3) this._showModal();
+  }
+
   render() {
     return (
       <Container style={{ flex: 1, color: 'green' }}>
@@ -26,6 +40,24 @@ class Dating extends Component {
             {users[this.props.currentIndex].name}
           </Text>
         </CardSection>
+
+        <Modal
+          isVisible={this.state.isModalVisible}
+          onBackdropPress={() => this._hideModal()}>
+         <View
+           style={{
+          alignSelf: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 350,
+          width: 250,
+          backgroundColor: '#f4ffef',
+          }}
+         >
+           <Text style={{ fontFamily: 'HelveticaNeue-Light', fontSize: 30 }}>It's A Match!!</Text>
+           <Image source={Logo} style={{ height: 100, width: 160, marginTop: 20 }} />
+         </View>
+       </Modal>
 
         <CardSection style={{ justifyContent: 'center' }}>
           <TouchableOpacity onPress={() => this.props.goToNext(this.props.currentIndex)}>
