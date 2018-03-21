@@ -9,7 +9,7 @@ import {
   UPDATE_AGE,
   UPDATE_PROPERTY,
   USER_POST,
-  USER_INFO
+  USER_INFO,
   SET_CHAT_ID,
   INITIALIZE_MESSAGES,
   NEXT
@@ -69,7 +69,7 @@ export const sendMessage = (message, matchId) => {
 
 export const userInfo = (id) => {
   return (dispatch) => {
-    axios.get(`https://intense-spire-14562.herokuapp.com/users`) 
+    axios.get(`https://intense-spire-14562.herokuapp.com/users`)
     .then(response => response)
     .then(data => {
       dispatch({

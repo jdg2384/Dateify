@@ -30,7 +30,7 @@ class UserInfoForm extends Component {
   }
   getVal(val){
     console.warn(val);
-  }    
+  }
 
   render() {
     return (
@@ -63,7 +63,7 @@ class UserInfoForm extends Component {
         <Label style={styles.margin}>Age Range</Label>
         <Text style={styles.welcome}>
           {this.state.age}
-        </Text>  
+        </Text>
         <Slider
         style={styles.slider}
          style={{ width: 300 }}
@@ -75,17 +75,17 @@ class UserInfoForm extends Component {
          onSlidingComplete={ val => this.getVal(val)}
         />
       </View>
-                 
+
         {/* <Item fixedLabel>
           <Label>Age Range</Label>
           <Input type='text' value={this.props.age_range} onChangeText={(value) => this.props.updateProperty({prop:'age_range', value})}></Input>
 
         </Item> */}
         <View style={styles.container}>
-        <Button style={styles.button}>
-          <Text onPress={() => 
+        {/* <Button style={styles.button}> */}
+          {/* <Text onPress={() =>
 
-        </Item>
+        </Item> */}
         <Item fixedLabel>
           <Label>Radius</Label>
           <Input type='text' value={this.props.radius} onChangeText={(value) => this.props.updateProperty({prop:'radius', value})}></Input>
@@ -96,7 +96,7 @@ class UserInfoForm extends Component {
             {
               const { gender, description, desired_gender, age, age_range, radius, name, imageURL, spotifyID, topTracks, topArtists } = this.props
               const obj = {
-              spotify_id: 1241242323412, // Not Working 
+              spotify_id: 1241242323412, // Not Working
               name: name,
               age: age,
               gender: gender,
@@ -105,7 +105,7 @@ class UserInfoForm extends Component {
               desired_gender: desired_gender,
               radius: radius,
               age_range: age_range,
-              
+
               top_tracks: topTracks.reduce((prev,curr) =>{
                               let key = curr.name
                               prev[key] = `${key}`
@@ -133,7 +133,7 @@ class UserInfoForm extends Component {
 const styles = StyleSheet.create({
   form: {
     backgroundColor: '#fff',
-    paddingLeft: -10, 
+    paddingLeft: -10,
   },
   description: {
     height: 100,
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     marginLeft:15,
   },
   marginPicker: {
-    textAlign: 'left',
+    // textAlign: 'left',
   },
   button: {
     marginLeft:140,

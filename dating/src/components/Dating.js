@@ -4,7 +4,13 @@ import { connect } from 'react-redux';
 import Modal from 'react-native-modal';
 import { Icon, Container } from 'native-base';
 import { Button, Card, CardSection } from './common';
-import { goToNext } from '../actions';
+import {
+  goToNext,
+  getTokenAndExpiration,
+  getNameImageId,
+  getUserLocation,
+  userInfo,
+} from '../actions';
 import Logo from '../assets/logo4.png';
 
 const users = [
@@ -20,26 +26,64 @@ const users = [
 ];
 
 class Dating extends Component {
+  componentDidMount() {
+    this.props.getTokenAndExpiration();
+    this.props.getNameImageId();
+    this.props.getUserLocation();
+    this.props.userInfo();
+    console.log(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.accessToken !== nextProps.accessToken) {
+      this.props.getMusicInfo('artists', nextProps.accessToken);
+      this.props.getMusicInfo('tracks', nextProps.accessToken);
+    }
+    if (nextProps.currentIndex === 3) this._showModal();
+    if (this.props.matches !== nextProps.matches) this.setState({ hasReceivedMatches: true })
+
+  }
+
   state = {
-    isModalVisible: false
+    isModalVisible: false,
+    hasReceivedMatches: false,
   };
 
    _hideModal = () => this.setState({ isModalVisible: false });
 
    _showModal = () => this.setState({ isModalVisible: true });
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.currentIndex === 3) this._showModal();
-  }
-
   render() {
-    return (
-      <Container style={{ flex: 1, color: 'green' }}>
+    // console.log(this.props.matches[0]);
+
+    const person = this.state.hasReceivedMatches ?
+      <Card>
         <CardSection style={{ justifyContent: 'center' }}>
-          <Text style={{ fontSize: 50 }}>
-            {users[this.props.currentIndex].name}
+          <Text style={{ fontSize: 30, textAlign: 'center' }}>
+            {this.props.matches[this.props.currentIndex].name}
+          </Text>
+
+        </CardSection>
+        <CardSection style={{ justifyContent: 'center' }}>
+          <Image style={{ height: 200, width: 200 }} source={{ uri: this.props.matches[this.props.currentIndex].photo }} />
+        </CardSection>
+        <CardSection style={{ justifyContent: 'center' }}>
+          <Text>
+            {this.props.matches[this.props.currentIndex].age}
           </Text>
         </CardSection>
+        <CardSection style={{ justifyContent: 'center' }}>
+          <Text>
+            {this.props.matches[this.props.currentIndex].description}
+          </Text>
+        </CardSection>
+      </Card> : null;
+
+    return (
+      <Container style={{ flex: 1, color: 'green' }}>
+
+        {person}
+
 
         <Modal
           isVisible={this.state.isModalVisible}
@@ -75,10 +119,15 @@ class Dating extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentIndex: state.user.currentIndex
+    currentIndex: state.user.currentIndex,
+    matches: state.user.matches
   };
 };
 
 export default connect(mapStateToProps, {
   goToNext,
+  getTokenAndExpiration,
+  getNameImageId,
+  getUserLocation,
+  userInfo,
 })(Dating);
